@@ -9,10 +9,10 @@ specifies that any user authenticated via an API key can "create", "read",
 const schema = a.schema({
   Tasks: a.model({
     taskId: a.id(),
-    task: a.string(),
+    task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
-    unitOfTime: a.enum(["year", "month", "day"]),
-    numTime: a.integer(),
+    howOften: a.integer().required().default(1),
+    unitOfTime: a.enum(["days", "months", "years"]),
     taskDetails: a.belongsTo('TaskDetails', 'taskId')
   }).authorization(allow => [allow.owner()]),
   TaskDetails: a.model({
