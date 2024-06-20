@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     client.models.Tasks.observeQuery().subscribe({
       next: (data) => {
-        console.log(data);
         setTasks([...data.items])},
     });
   }, []);
@@ -22,8 +21,6 @@ function App() {
   function toggleForm() {
     setOpenTaskForm(!openTaskForm);
   }
-
-  // console.log(tasks);
 
   return (
         <Authenticator>
