@@ -15,9 +15,11 @@ const schema = a.schema({
     unitOfTime: a.enum(["days", "months", "years"]),
     taskDetails: a.belongsTo('TaskDetails', 'taskId')
   }).authorization(allow => [allow.owner()]),
-  TaskDetails: a.model({
-    taskDescriptionId: a.id(),
+  TaskLogs: a.model({
+    taskLogId: a.id(),
     notes: a.string(),
+    completionData: a.date(),
+    attachmentPath: a.string(),
     task: a.hasOne('Tasks', 'taskId')
     // find a way to attach files or references to files
   }).authorization(allow => [allow.owner()]),
