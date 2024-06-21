@@ -21,7 +21,6 @@ const schema = a.schema({
     completionData: a.date(),
     attachmentPath: a.string(),
     task: a.hasOne('Tasks', 'taskId')
-    // find a way to attach files or references to files
   }).authorization(allow => [allow.owner()]),
 });
 
