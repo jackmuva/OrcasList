@@ -2,12 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTaskDetails = /* GraphQL */ `
-  mutation CreateTaskDetails(
-    $condition: ModelTaskDetailsConditionInput
-    $input: CreateTaskDetailsInput!
+export const createTaskLogs = /* GraphQL */ `
+  mutation CreateTaskLogs(
+    $condition: ModelTaskLogsConditionInput
+    $input: CreateTaskLogsInput!
   ) {
-    createTaskDetails(condition: $condition, input: $input) {
+    createTaskLogs(condition: $condition, input: $input) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -24,7 +26,7 @@ export const createTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -43,11 +45,13 @@ export const createTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }
@@ -58,12 +62,14 @@ export const createTasks = /* GraphQL */ `
     }
   }
 `;
-export const deleteTaskDetails = /* GraphQL */ `
-  mutation DeleteTaskDetails(
-    $condition: ModelTaskDetailsConditionInput
-    $input: DeleteTaskDetailsInput!
+export const deleteTaskLogs = /* GraphQL */ `
+  mutation DeleteTaskLogs(
+    $condition: ModelTaskLogsConditionInput
+    $input: DeleteTaskLogsInput!
   ) {
-    deleteTaskDetails(condition: $condition, input: $input) {
+    deleteTaskLogs(condition: $condition, input: $input) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -80,7 +86,7 @@ export const deleteTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -99,11 +105,13 @@ export const deleteTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }
@@ -114,12 +122,14 @@ export const deleteTasks = /* GraphQL */ `
     }
   }
 `;
-export const updateTaskDetails = /* GraphQL */ `
-  mutation UpdateTaskDetails(
-    $condition: ModelTaskDetailsConditionInput
-    $input: UpdateTaskDetailsInput!
+export const updateTaskLogs = /* GraphQL */ `
+  mutation UpdateTaskLogs(
+    $condition: ModelTaskLogsConditionInput
+    $input: UpdateTaskLogsInput!
   ) {
-    updateTaskDetails(condition: $condition, input: $input) {
+    updateTaskLogs(condition: $condition, input: $input) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -136,7 +146,7 @@ export const updateTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -155,11 +165,13 @@ export const updateTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }

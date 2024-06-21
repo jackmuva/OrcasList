@@ -1,22 +1,16 @@
 /* eslint-disable */
 "use client";
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getTasks } from "./graphql/queries";
-import { updateTasks } from "./graphql/mutations";
+import { getTaskLogs } from "./graphql/queries";
+import { updateTaskLogs } from "./graphql/mutations";
 const client = generateClient();
-export default function TasksUpdateForm(props) {
+export default function TaskLogsUpdateForm(props) {
   const {
     id: idProp,
-    tasks: tasksModelProp,
+    taskLogs: taskLogsModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -26,49 +20,51 @@ export default function TasksUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    task: "",
-    lastCompletedDate: "",
-    howOften: "",
-    unitOfTime: "",
+    taskLogId: "",
+    notes: "",
+    completionData: "",
+    attachmentPath: "",
   };
-  const [task, setTask] = React.useState(initialValues.task);
-  const [lastCompletedDate, setLastCompletedDate] = React.useState(
-    initialValues.lastCompletedDate
+  const [taskLogId, setTaskLogId] = React.useState(initialValues.taskLogId);
+  const [notes, setNotes] = React.useState(initialValues.notes);
+  const [completionData, setCompletionData] = React.useState(
+    initialValues.completionData
   );
-  const [howOften, setHowOften] = React.useState(initialValues.howOften);
-  const [unitOfTime, setUnitOfTime] = React.useState(initialValues.unitOfTime);
+  const [attachmentPath, setAttachmentPath] = React.useState(
+    initialValues.attachmentPath
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = tasksRecord
-      ? { ...initialValues, ...tasksRecord }
+    const cleanValues = taskLogsRecord
+      ? { ...initialValues, ...taskLogsRecord }
       : initialValues;
-    setTask(cleanValues.task);
-    setLastCompletedDate(cleanValues.lastCompletedDate);
-    setHowOften(cleanValues.howOften);
-    setUnitOfTime(cleanValues.unitOfTime);
+    setTaskLogId(cleanValues.taskLogId);
+    setNotes(cleanValues.notes);
+    setCompletionData(cleanValues.completionData);
+    setAttachmentPath(cleanValues.attachmentPath);
     setErrors({});
   };
-  const [tasksRecord, setTasksRecord] = React.useState(tasksModelProp);
+  const [taskLogsRecord, setTaskLogsRecord] = React.useState(taskLogsModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getTasks.replaceAll("__typename", ""),
+              query: getTaskLogs.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getTasks
-        : tasksModelProp;
-      setTasksRecord(record);
+          )?.data?.getTaskLogs
+        : taskLogsModelProp;
+      setTaskLogsRecord(record);
     };
     queryData();
-  }, [idProp, tasksModelProp]);
-  React.useEffect(resetStateValues, [tasksRecord]);
+  }, [idProp, taskLogsModelProp]);
+  React.useEffect(resetStateValues, [taskLogsRecord]);
   const validations = {
-    task: [{ type: "Required" }],
-    lastCompletedDate: [],
-    howOften: [{ type: "Required" }],
-    unitOfTime: [],
+    taskLogId: [],
+    notes: [],
+    completionData: [],
+    attachmentPath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -96,10 +92,10 @@ export default function TasksUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          task,
-          lastCompletedDate: lastCompletedDate ?? null,
-          howOften,
-          unitOfTime: unitOfTime ?? null,
+          taskLogId: taskLogId ?? null,
+          notes: notes ?? null,
+          completionData: completionData ?? null,
+          attachmentPath: attachmentPath ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -130,10 +126,10 @@ export default function TasksUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateTasks.replaceAll("__typename", ""),
+            query: updateTaskLogs.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: tasksRecord.id,
+                id: taskLogsRecord.id,
                 ...modelFields,
               },
             },
@@ -148,140 +144,118 @@ export default function TasksUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "TasksUpdateForm")}
+      {...getOverrideProps(overrides, "TaskLogsUpdateForm")}
       {...rest}
     >
       <TextField
-        label="Task"
-        isRequired={true}
+        label="Task log id"
+        isRequired={false}
         isReadOnly={false}
-        value={task}
+        value={taskLogId}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              task: value,
-              lastCompletedDate,
-              howOften,
-              unitOfTime,
+              taskLogId: value,
+              notes,
+              completionData,
+              attachmentPath,
             };
             const result = onChange(modelFields);
-            value = result?.task ?? value;
+            value = result?.taskLogId ?? value;
           }
-          if (errors.task?.hasError) {
-            runValidationTasks("task", value);
+          if (errors.taskLogId?.hasError) {
+            runValidationTasks("taskLogId", value);
           }
-          setTask(value);
+          setTaskLogId(value);
         }}
-        onBlur={() => runValidationTasks("task", task)}
-        errorMessage={errors.task?.errorMessage}
-        hasError={errors.task?.hasError}
-        {...getOverrideProps(overrides, "task")}
+        onBlur={() => runValidationTasks("taskLogId", taskLogId)}
+        errorMessage={errors.taskLogId?.errorMessage}
+        hasError={errors.taskLogId?.hasError}
+        {...getOverrideProps(overrides, "taskLogId")}
       ></TextField>
       <TextField
-        label="Last completed date"
+        label="Notes"
+        isRequired={false}
+        isReadOnly={false}
+        value={notes}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taskLogId,
+              notes: value,
+              completionData,
+              attachmentPath,
+            };
+            const result = onChange(modelFields);
+            value = result?.notes ?? value;
+          }
+          if (errors.notes?.hasError) {
+            runValidationTasks("notes", value);
+          }
+          setNotes(value);
+        }}
+        onBlur={() => runValidationTasks("notes", notes)}
+        errorMessage={errors.notes?.errorMessage}
+        hasError={errors.notes?.hasError}
+        {...getOverrideProps(overrides, "notes")}
+      ></TextField>
+      <TextField
+        label="Completion data"
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={lastCompletedDate}
+        value={completionData}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              task,
-              lastCompletedDate: value,
-              howOften,
-              unitOfTime,
+              taskLogId,
+              notes,
+              completionData: value,
+              attachmentPath,
             };
             const result = onChange(modelFields);
-            value = result?.lastCompletedDate ?? value;
+            value = result?.completionData ?? value;
           }
-          if (errors.lastCompletedDate?.hasError) {
-            runValidationTasks("lastCompletedDate", value);
+          if (errors.completionData?.hasError) {
+            runValidationTasks("completionData", value);
           }
-          setLastCompletedDate(value);
+          setCompletionData(value);
         }}
-        onBlur={() =>
-          runValidationTasks("lastCompletedDate", lastCompletedDate)
-        }
-        errorMessage={errors.lastCompletedDate?.errorMessage}
-        hasError={errors.lastCompletedDate?.hasError}
-        {...getOverrideProps(overrides, "lastCompletedDate")}
+        onBlur={() => runValidationTasks("completionData", completionData)}
+        errorMessage={errors.completionData?.errorMessage}
+        hasError={errors.completionData?.hasError}
+        {...getOverrideProps(overrides, "completionData")}
       ></TextField>
       <TextField
-        label="How often"
-        isRequired={true}
+        label="Attachment path"
+        isRequired={false}
         isReadOnly={false}
-        type="number"
-        step="any"
-        value={howOften}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              task,
-              lastCompletedDate,
-              howOften: value,
-              unitOfTime,
-            };
-            const result = onChange(modelFields);
-            value = result?.howOften ?? value;
-          }
-          if (errors.howOften?.hasError) {
-            runValidationTasks("howOften", value);
-          }
-          setHowOften(value);
-        }}
-        onBlur={() => runValidationTasks("howOften", howOften)}
-        errorMessage={errors.howOften?.errorMessage}
-        hasError={errors.howOften?.hasError}
-        {...getOverrideProps(overrides, "howOften")}
-      ></TextField>
-      <SelectField
-        label="Unit of time"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={unitOfTime}
+        value={attachmentPath}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              task,
-              lastCompletedDate,
-              howOften,
-              unitOfTime: value,
+              taskLogId,
+              notes,
+              completionData,
+              attachmentPath: value,
             };
             const result = onChange(modelFields);
-            value = result?.unitOfTime ?? value;
+            value = result?.attachmentPath ?? value;
           }
-          if (errors.unitOfTime?.hasError) {
-            runValidationTasks("unitOfTime", value);
+          if (errors.attachmentPath?.hasError) {
+            runValidationTasks("attachmentPath", value);
           }
-          setUnitOfTime(value);
+          setAttachmentPath(value);
         }}
-        onBlur={() => runValidationTasks("unitOfTime", unitOfTime)}
-        errorMessage={errors.unitOfTime?.errorMessage}
-        hasError={errors.unitOfTime?.hasError}
-        {...getOverrideProps(overrides, "unitOfTime")}
-      >
-        <option
-          children="Days"
-          value="days"
-          {...getOverrideProps(overrides, "unitOfTimeoption0")}
-        ></option>
-        <option
-          children="Months"
-          value="months"
-          {...getOverrideProps(overrides, "unitOfTimeoption1")}
-        ></option>
-        <option
-          children="Years"
-          value="years"
-          {...getOverrideProps(overrides, "unitOfTimeoption2")}
-        ></option>
-      </SelectField>
+        onBlur={() => runValidationTasks("attachmentPath", attachmentPath)}
+        errorMessage={errors.attachmentPath?.errorMessage}
+        hasError={errors.attachmentPath?.hasError}
+        {...getOverrideProps(overrides, "attachmentPath")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -293,7 +267,7 @@ export default function TasksUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || tasksModelProp)}
+          isDisabled={!(idProp || taskLogsModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -305,7 +279,7 @@ export default function TasksUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || tasksModelProp) ||
+              !(idProp || taskLogsModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
