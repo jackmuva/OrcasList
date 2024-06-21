@@ -66,7 +66,7 @@ export default function TasksUpdateForm(props) {
   React.useEffect(resetStateValues, [tasksRecord]);
   const validations = {
     task: [{ type: "Required" }],
-    lastCompletedDate: [{ type: "Required" }],
+    lastCompletedDate: [],
     howOften: [{ type: "Required" }],
     unitOfTime: [],
   };
@@ -97,7 +97,7 @@ export default function TasksUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           task,
-          lastCompletedDate,
+          lastCompletedDate: lastCompletedDate ?? null,
           howOften,
           unitOfTime: unitOfTime ?? null,
         };
@@ -180,7 +180,7 @@ export default function TasksUpdateForm(props) {
       ></TextField>
       <TextField
         label="Last completed date"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="date"
         value={lastCompletedDate}

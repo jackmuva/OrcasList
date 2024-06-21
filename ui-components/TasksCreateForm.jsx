@@ -45,7 +45,7 @@ export default function TasksCreateForm(props) {
   };
   const validations = {
     task: [{ type: "Required" }],
-    lastCompletedDate: [{ type: "Required" }],
+    lastCompletedDate: [],
     howOften: [{ type: "Required" }],
     unitOfTime: [],
   };
@@ -161,7 +161,7 @@ export default function TasksCreateForm(props) {
       ></TextField>
       <TextField
         label="Last completed date"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="date"
         value={lastCompletedDate}

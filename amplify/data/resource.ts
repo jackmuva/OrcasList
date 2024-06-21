@@ -13,7 +13,7 @@ const schema = a.schema({
     lastCompletedDate: a.date(),
     howOften: a.integer().required().default(1),
     unitOfTime: a.enum(["days", "months", "years"]),
-    taskDetails: a.belongsTo('TaskDetails', 'taskId')
+    taskDetails: a.belongsTo('TaskLogs', 'taskId')
   }).authorization(allow => [allow.owner()]),
   TaskLogs: a.model({
     taskLogId: a.id(),
@@ -32,7 +32,6 @@ export const data = defineData({
     defaultAuthorizationMode: "userPool",
   },
 });
-
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a
 Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY

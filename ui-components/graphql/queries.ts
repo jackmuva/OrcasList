@@ -2,9 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTaskDetails = /* GraphQL */ `
-  query GetTaskDetails($id: ID!) {
-    getTaskDetails(id: $id) {
+export const getTaskLogs = /* GraphQL */ `
+  query GetTaskLogs($id: ID!) {
+    getTaskLogs(id: $id) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -21,7 +23,7 @@ export const getTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -37,11 +39,13 @@ export const getTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }
@@ -52,19 +56,21 @@ export const getTasks = /* GraphQL */ `
     }
   }
 `;
-export const listTaskDetails = /* GraphQL */ `
-  query ListTaskDetails(
-    $filter: ModelTaskDetailsFilterInput
+export const listTaskLogs = /* GraphQL */ `
+  query ListTaskLogs(
+    $filter: ModelTaskLogsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTaskDetails(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTaskLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }

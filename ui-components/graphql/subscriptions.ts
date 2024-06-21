@@ -2,12 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTaskDetails = /* GraphQL */ `
-  subscription OnCreateTaskDetails(
-    $filter: ModelSubscriptionTaskDetailsFilterInput
+export const onCreateTaskLogs = /* GraphQL */ `
+  subscription OnCreateTaskLogs(
+    $filter: ModelSubscriptionTaskLogsFilterInput
     $owner: String
   ) {
-    onCreateTaskDetails(filter: $filter, owner: $owner) {
+    onCreateTaskLogs(filter: $filter, owner: $owner) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -24,7 +26,7 @@ export const onCreateTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -43,11 +45,13 @@ export const onCreateTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }
@@ -58,12 +62,14 @@ export const onCreateTasks = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteTaskDetails = /* GraphQL */ `
-  subscription OnDeleteTaskDetails(
-    $filter: ModelSubscriptionTaskDetailsFilterInput
+export const onDeleteTaskLogs = /* GraphQL */ `
+  subscription OnDeleteTaskLogs(
+    $filter: ModelSubscriptionTaskLogsFilterInput
     $owner: String
   ) {
-    onDeleteTaskDetails(filter: $filter, owner: $owner) {
+    onDeleteTaskLogs(filter: $filter, owner: $owner) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -80,7 +86,7 @@ export const onDeleteTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -99,11 +105,13 @@ export const onDeleteTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }
@@ -114,12 +122,14 @@ export const onDeleteTasks = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateTaskDetails = /* GraphQL */ `
-  subscription OnUpdateTaskDetails(
-    $filter: ModelSubscriptionTaskDetailsFilterInput
+export const onUpdateTaskLogs = /* GraphQL */ `
+  subscription OnUpdateTaskLogs(
+    $filter: ModelSubscriptionTaskLogsFilterInput
     $owner: String
   ) {
-    onUpdateTaskDetails(filter: $filter, owner: $owner) {
+    onUpdateTaskLogs(filter: $filter, owner: $owner) {
+      attachmentPath
+      completionData
       createdAt
       id
       notes
@@ -136,7 +146,7 @@ export const onUpdateTaskDetails = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskDescriptionId
+      taskLogId
       updatedAt
       __typename
     }
@@ -155,11 +165,13 @@ export const onUpdateTasks = /* GraphQL */ `
       owner
       task
       taskDetails {
+        attachmentPath
+        completionData
         createdAt
         id
         notes
         owner
-        taskDescriptionId
+        taskLogId
         updatedAt
         __typename
       }

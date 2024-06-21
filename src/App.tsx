@@ -4,6 +4,7 @@ import { generateClient } from "aws-amplify/data";
 import {Authenticator} from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css'
 import TasksCreateForm from '../ui-components/TasksCreateForm';
+import TaskCard from "./custom-components/TaskCard/TaskCard";
 
 const client = generateClient<Schema>();
 
@@ -30,14 +31,19 @@ function App() {
               <button onClick={toggleForm}>+ new</button>
               {openTaskForm && <TasksCreateForm></TasksCreateForm>}
               <ul>
-                {tasks.map((task) => (
-                  <li key={task.taskId}>{task.task}</li>
+                {tasks.map((elem) => (
+                  <TaskCard
+                      taskId = {elem.taskId ?? ""}
+                      task = {elem.task}
+                      lastCompletedDate = {elem.lastCompletedDate ?? ""}
+                      howOften = {elem.howOften}
+                      unitOfTime = {elem.unitOfTime ?? ""}
+                      key={elem.taskId} />
                 ))}
               </ul>
               <button onClick={signOut}>Sign out</button>
             </main>)}
         </Authenticator>
-    )
+    );
 }
-
 export default App;
