@@ -28,9 +28,9 @@ function App() {
           {({ signOut, user }) => (
             <main>
               <h1>{user?.signInDetails?.loginId}'s todos</h1>
-              <button onClick={toggleForm}>+ new</button>
+              <button onClick={toggleForm}>+ Add new task</button>
               {openTaskForm && <TasksCreateForm></TasksCreateForm>}
-              <ul>
+              <ul className = "w-96">
                 {tasks.map((elem) => (
                   <TaskCard
                       taskId = {elem.taskId ?? ""}
