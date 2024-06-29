@@ -26,7 +26,6 @@ export const createTaskLogs = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskLogId
       updatedAt
       __typename
     }
@@ -51,7 +50,6 @@ export const createTasks = /* GraphQL */ `
         id
         notes
         owner
-        taskLogId
         updatedAt
         __typename
       }
@@ -86,7 +84,6 @@ export const deleteTaskLogs = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskLogId
       updatedAt
       __typename
     }
@@ -111,7 +108,6 @@ export const deleteTasks = /* GraphQL */ `
         id
         notes
         owner
-        taskLogId
         updatedAt
         __typename
       }
@@ -146,7 +142,6 @@ export const updateTaskLogs = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskLogId
       updatedAt
       __typename
     }
@@ -171,7 +166,6 @@ export const updateTasks = /* GraphQL */ `
         id
         notes
         owner
-        taskLogId
         updatedAt
         __typename
       }

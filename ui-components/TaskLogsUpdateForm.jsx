@@ -20,12 +20,10 @@ export default function TaskLogsUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    taskLogId: "",
     notes: "",
     completionData: "",
     attachmentPath: "",
   };
-  const [taskLogId, setTaskLogId] = React.useState(initialValues.taskLogId);
   const [notes, setNotes] = React.useState(initialValues.notes);
   const [completionData, setCompletionData] = React.useState(
     initialValues.completionData
@@ -38,7 +36,6 @@ export default function TaskLogsUpdateForm(props) {
     const cleanValues = taskLogsRecord
       ? { ...initialValues, ...taskLogsRecord }
       : initialValues;
-    setTaskLogId(cleanValues.taskLogId);
     setNotes(cleanValues.notes);
     setCompletionData(cleanValues.completionData);
     setAttachmentPath(cleanValues.attachmentPath);
@@ -61,7 +58,6 @@ export default function TaskLogsUpdateForm(props) {
   }, [idProp, taskLogsModelProp]);
   React.useEffect(resetStateValues, [taskLogsRecord]);
   const validations = {
-    taskLogId: [],
     notes: [],
     completionData: [],
     attachmentPath: [],
@@ -92,7 +88,6 @@ export default function TaskLogsUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          taskLogId: taskLogId ?? null,
           notes: notes ?? null,
           completionData: completionData ?? null,
           attachmentPath: attachmentPath ?? null,
@@ -148,33 +143,6 @@ export default function TaskLogsUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Task log id"
-        isRequired={false}
-        isReadOnly={false}
-        value={taskLogId}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              taskLogId: value,
-              notes,
-              completionData,
-              attachmentPath,
-            };
-            const result = onChange(modelFields);
-            value = result?.taskLogId ?? value;
-          }
-          if (errors.taskLogId?.hasError) {
-            runValidationTasks("taskLogId", value);
-          }
-          setTaskLogId(value);
-        }}
-        onBlur={() => runValidationTasks("taskLogId", taskLogId)}
-        errorMessage={errors.taskLogId?.errorMessage}
-        hasError={errors.taskLogId?.hasError}
-        {...getOverrideProps(overrides, "taskLogId")}
-      ></TextField>
-      <TextField
         label="Notes"
         isRequired={false}
         isReadOnly={false}
@@ -183,7 +151,6 @@ export default function TaskLogsUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              taskLogId,
               notes: value,
               completionData,
               attachmentPath,
@@ -211,7 +178,6 @@ export default function TaskLogsUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              taskLogId,
               notes,
               completionData: value,
               attachmentPath,
@@ -238,7 +204,6 @@ export default function TaskLogsUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              taskLogId,
               notes,
               completionData,
               attachmentPath: value,

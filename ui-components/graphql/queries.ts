@@ -23,7 +23,6 @@ export const getTaskLogs = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskLogId
       updatedAt
       __typename
     }
@@ -45,7 +44,6 @@ export const getTasks = /* GraphQL */ `
         id
         notes
         owner
-        taskLogId
         updatedAt
         __typename
       }
@@ -70,7 +68,6 @@ export const listTaskLogs = /* GraphQL */ `
         id
         notes
         owner
-        taskLogId
         updatedAt
         __typename
       }
