@@ -8,18 +8,18 @@ specifies that any user authenticated via an API key can "create", "read",
 =========================================================================*/
 const schema = a.schema({
   Tasks: a.model({
-    taskId: a.id(),
+    // taskId: a.id().required(),
     task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
     howOften: a.integer().required().default(1),
     unitOfTime: a.enum(["days", "months", "years"]),
-    taskDetails: a.belongsTo('TaskLogs', 'taskId')
+    taskDetails: a.belongsTo('TaskLogs', 'id')
   }).authorization(allow => [allow.owner()]),
   TaskLogs: a.model({
     notes: a.string(),
     completionData: a.date().required(),
     attachmentPath: a.string(),
-    task: a.hasOne('Tasks', 'taskId')
+    task: a.hasOne('Tasks', 'id')
   }).authorization(allow => [allow.owner()]),
 });
 

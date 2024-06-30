@@ -1,15 +1,24 @@
-import Task from "../../model/Task";
+import Task from "../../../model/Task";
 import {useState} from "react";
 import TaskCompletionDropdown from "../TaskCompletionDropdown/TaskCompletionDropdown";
+import {useNavigate} from "react-router-dom";
 
 
 function TaskOptionDropdown( input: Task ){
-    console.log(input.task);
     const [completionDropdown, setCompletionDropdown] = useState(false);
+    const navigate = useNavigate();
 
     const toggleOpen = () => {
         setCompletionDropdown(!completionDropdown);
     }
+    const redirectToTaskDetails = () => {
+        console.log(input);
+        console.log(input.id);
+        const url = "/task/" + input.id;
+        console.log(url);
+        navigate(url);
+    }
+
     return (
         <div className = "flex flex-col">
             <div className = "flex flex-row">
@@ -19,12 +28,12 @@ function TaskOptionDropdown( input: Task ){
                     </button>
                 </div>
                 <div className= "flex-auto">
-                    <button className = "">
+                    <button className = "" onClick = {redirectToTaskDetails}>
                         Detailed Task View
                     </button>
                 </div>
             </div>
-            { completionDropdown && <TaskCompletionDropdown taskId={input.taskId ?? ""}
+            { completionDropdown && <TaskCompletionDropdown id={input.id ?? ""}
                                                         task={input.task}
                                                         lastCompletedDate={input.lastCompletedDate ?? ""}
                                                         howOften={input.howOften}

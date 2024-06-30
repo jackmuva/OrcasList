@@ -1,4 +1,4 @@
-import Task from "../../model/Task";
+import Task from "../../../model/Task";
 import {useState} from "react";
 import TaskOptionDropdown from "../TaskOptionDropdown/TaskOptionDropdown";
 
@@ -8,6 +8,7 @@ function TaskCard( input: Task ) {
     const toggleOpen = () => {
         setOpenTaskOptions(!openTaskOptions)
     }
+    console.log(input);
 
     return(
         <div className= "flex-col bg-white px-2">
@@ -20,7 +21,7 @@ function TaskCard( input: Task ) {
                 </div>
             </div>
             {openTaskOptions &&
-                <TaskOptionDropdown taskId={input.taskId ?? ""}
+                <TaskOptionDropdown id={input.id ?? ""}
                                     task={input.task}
                                     lastCompletedDate={input.lastCompletedDate ?? ""}
                                     howOften={input.howOften}
