@@ -12,10 +12,7 @@ function TaskOptionDropdown( input: Task ){
         setCompletionDropdown(!completionDropdown);
     }
     const redirectToTaskDetails = () => {
-        console.log(input);
-        console.log(input.id);
         const url = "/task/" + input.id;
-        console.log(url);
         navigate(url);
     }
 

@@ -59,7 +59,7 @@ export default function TaskLogsUpdateForm(props) {
   React.useEffect(resetStateValues, [taskLogsRecord]);
   const validations = {
     notes: [],
-    completionData: [],
+    completionData: [{ type: "Required" }],
     attachmentPath: [],
   };
   const runValidationTasks = async (
@@ -89,7 +89,7 @@ export default function TaskLogsUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           notes: notes ?? null,
-          completionData: completionData ?? null,
+          completionData,
           attachmentPath: attachmentPath ?? null,
         };
         const validationResponses = await Promise.all(
@@ -170,7 +170,7 @@ export default function TaskLogsUpdateForm(props) {
       ></TextField>
       <TextField
         label="Completion data"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="date"
         value={completionData}

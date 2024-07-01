@@ -38,7 +38,7 @@ export default function TaskLogsCreateForm(props) {
   };
   const validations = {
     notes: [],
-    completionData: [],
+    completionData: [{ type: "Required" }],
     attachmentPath: [],
   };
   const runValidationTasks = async (
@@ -151,7 +151,7 @@ export default function TaskLogsCreateForm(props) {
       ></TextField>
       <TextField
         label="Completion data"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="date"
         value={completionData}

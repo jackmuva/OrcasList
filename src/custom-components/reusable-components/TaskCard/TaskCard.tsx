@@ -8,7 +8,6 @@ function TaskCard( input: Task ) {
     const toggleOpen = () => {
         setOpenTaskOptions(!openTaskOptions)
     }
-    console.log(input);
 
     return(
         <div className= "flex-col bg-white px-2">

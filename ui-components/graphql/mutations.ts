@@ -15,15 +15,7 @@ export const createTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        createdAt
-        howOften
-        id
-        lastCompletedDate
-        owner
-        task
-        taskId
-        unitOfTime
-        updatedAt
+        nextToken
         __typename
       }
       updatedAt
@@ -43,7 +35,7 @@ export const createTasks = /* GraphQL */ `
       lastCompletedDate
       owner
       task
-      taskDetails {
+      taskLogs {
         attachmentPath
         completionData
         createdAt
@@ -53,7 +45,6 @@ export const createTasks = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskId
       unitOfTime
       updatedAt
       __typename
@@ -73,15 +64,7 @@ export const deleteTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        createdAt
-        howOften
-        id
-        lastCompletedDate
-        owner
-        task
-        taskId
-        unitOfTime
-        updatedAt
+        nextToken
         __typename
       }
       updatedAt
@@ -101,7 +84,7 @@ export const deleteTasks = /* GraphQL */ `
       lastCompletedDate
       owner
       task
-      taskDetails {
+      taskLogs {
         attachmentPath
         completionData
         createdAt
@@ -111,7 +94,6 @@ export const deleteTasks = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskId
       unitOfTime
       updatedAt
       __typename
@@ -131,15 +113,7 @@ export const updateTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        createdAt
-        howOften
-        id
-        lastCompletedDate
-        owner
-        task
-        taskId
-        unitOfTime
-        updatedAt
+        nextToken
         __typename
       }
       updatedAt
@@ -159,7 +133,7 @@ export const updateTasks = /* GraphQL */ `
       lastCompletedDate
       owner
       task
-      taskDetails {
+      taskLogs {
         attachmentPath
         completionData
         createdAt
@@ -169,7 +143,6 @@ export const updateTasks = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskId
       unitOfTime
       updatedAt
       __typename

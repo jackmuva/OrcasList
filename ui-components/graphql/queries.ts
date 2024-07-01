@@ -12,15 +12,7 @@ export const getTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        createdAt
-        howOften
-        id
-        lastCompletedDate
-        owner
-        task
-        taskId
-        unitOfTime
-        updatedAt
+        nextToken
         __typename
       }
       updatedAt
@@ -37,7 +29,7 @@ export const getTasks = /* GraphQL */ `
       lastCompletedDate
       owner
       task
-      taskDetails {
+      taskLogs {
         attachmentPath
         completionData
         createdAt
@@ -47,7 +39,6 @@ export const getTasks = /* GraphQL */ `
         updatedAt
         __typename
       }
-      taskId
       unitOfTime
       updatedAt
       __typename
@@ -79,10 +70,18 @@ export const listTaskLogs = /* GraphQL */ `
 export const listTasks = /* GraphQL */ `
   query ListTasks(
     $filter: ModelTasksFilterInput
+    $id: ID
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTasks(
+      filter: $filter
+      id: $id
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         createdAt
         howOften
@@ -90,7 +89,6 @@ export const listTasks = /* GraphQL */ `
         lastCompletedDate
         owner
         task
-        taskId
         unitOfTime
         updatedAt
         __typename
