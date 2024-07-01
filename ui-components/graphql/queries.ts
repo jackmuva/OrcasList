@@ -12,9 +12,17 @@ export const getTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        nextToken
+        createdAt
+        howOften
+        id
+        lastCompletedDate
+        owner
+        task
+        unitOfTime
+        updatedAt
         __typename
       }
+      taskId
       updatedAt
       __typename
     }
@@ -30,13 +38,7 @@ export const getTasks = /* GraphQL */ `
       owner
       task
       taskLogs {
-        attachmentPath
-        completionData
-        createdAt
-        id
-        notes
-        owner
-        updatedAt
+        nextToken
         __typename
       }
       unitOfTime
@@ -48,10 +50,18 @@ export const getTasks = /* GraphQL */ `
 export const listTaskLogs = /* GraphQL */ `
   query ListTaskLogs(
     $filter: ModelTaskLogsFilterInput
+    $id: ID
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listTaskLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTaskLogs(
+      filter: $filter
+      id: $id
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         attachmentPath
         completionData
@@ -59,6 +69,7 @@ export const listTaskLogs = /* GraphQL */ `
         id
         notes
         owner
+        taskId
         updatedAt
         __typename
       }
@@ -70,18 +81,10 @@ export const listTaskLogs = /* GraphQL */ `
 export const listTasks = /* GraphQL */ `
   query ListTasks(
     $filter: ModelTasksFilterInput
-    $id: ID
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listTasks(
-      filter: $filter
-      id: $id
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         createdAt
         howOften

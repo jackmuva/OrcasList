@@ -12,7 +12,7 @@ function TaskDetailPage(){
         client.models.TaskLogs.observeQuery(
             {
                 filter: {
-                    id: {
+                    taskId: {
                         eq: taskId
                     }
                 }
@@ -22,11 +22,12 @@ function TaskDetailPage(){
                 setTaskLogs([...data.items])},
         });
     }, []);
+    // console.log(taskLogs);
     return(
         <div>
             {taskLogs.map((taskLog) => (
                 <div>
-                    {taskLog.id}
+                    {taskLog.notes}
                 </div>
             ))}
         </div>

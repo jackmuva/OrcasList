@@ -16,6 +16,7 @@ const schema = a.schema({
   }).authorization(allow => [allow.owner()]),
   TaskLogs: a.model({
     id: a.id().required(),
+    taskId: a.string(),
     notes: a.string(),
     completionData: a.date().required(),
     attachmentPath: a.string(),

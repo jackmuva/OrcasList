@@ -6,7 +6,19 @@ function TaskCompletionDropdown( input: Task){
     console.log(input);
     return(
         <div>
-            <TaskLogsCreateForm></TaskLogsCreateForm>
+            <TaskLogsCreateForm
+                overrides={{
+                    taskId: {
+                        hidden: true,
+                        labelHidden: true
+                    },
+                }}
+                onSubmit={(fields) => {
+                    return {
+                        ...fields,
+                        taskId: input?.id
+                    }
+                }}></TaskLogsCreateForm>
         </div>
     );
 }

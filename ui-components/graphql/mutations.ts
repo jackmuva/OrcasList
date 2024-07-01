@@ -15,9 +15,17 @@ export const createTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        nextToken
+        createdAt
+        howOften
+        id
+        lastCompletedDate
+        owner
+        task
+        unitOfTime
+        updatedAt
         __typename
       }
+      taskId
       updatedAt
       __typename
     }
@@ -36,13 +44,7 @@ export const createTasks = /* GraphQL */ `
       owner
       task
       taskLogs {
-        attachmentPath
-        completionData
-        createdAt
-        id
-        notes
-        owner
-        updatedAt
+        nextToken
         __typename
       }
       unitOfTime
@@ -64,9 +66,17 @@ export const deleteTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        nextToken
+        createdAt
+        howOften
+        id
+        lastCompletedDate
+        owner
+        task
+        unitOfTime
+        updatedAt
         __typename
       }
+      taskId
       updatedAt
       __typename
     }
@@ -85,13 +95,7 @@ export const deleteTasks = /* GraphQL */ `
       owner
       task
       taskLogs {
-        attachmentPath
-        completionData
-        createdAt
-        id
-        notes
-        owner
-        updatedAt
+        nextToken
         __typename
       }
       unitOfTime
@@ -113,9 +117,17 @@ export const updateTaskLogs = /* GraphQL */ `
       notes
       owner
       task {
-        nextToken
+        createdAt
+        howOften
+        id
+        lastCompletedDate
+        owner
+        task
+        unitOfTime
+        updatedAt
         __typename
       }
+      taskId
       updatedAt
       __typename
     }
@@ -134,13 +146,7 @@ export const updateTasks = /* GraphQL */ `
       owner
       task
       taskLogs {
-        attachmentPath
-        completionData
-        createdAt
-        id
-        notes
-        owner
-        updatedAt
+        nextToken
         __typename
       }
       unitOfTime
