@@ -20,13 +20,13 @@ export default function TaskLogsCreateForm(props) {
   const initialValues = {
     taskId: "",
     notes: "",
-    completionData: "",
+    completionDate: "",
     attachmentPath: "",
   };
   const [taskId, setTaskId] = React.useState(initialValues.taskId);
   const [notes, setNotes] = React.useState(initialValues.notes);
-  const [completionData, setCompletionData] = React.useState(
-    initialValues.completionData
+  const [completionDate, setCompletionDate] = React.useState(
+    initialValues.completionDate
   );
   const [attachmentPath, setAttachmentPath] = React.useState(
     initialValues.attachmentPath
@@ -35,14 +35,14 @@ export default function TaskLogsCreateForm(props) {
   const resetStateValues = () => {
     setTaskId(initialValues.taskId);
     setNotes(initialValues.notes);
-    setCompletionData(initialValues.completionData);
+    setCompletionDate(initialValues.completionDate);
     setAttachmentPath(initialValues.attachmentPath);
     setErrors({});
   };
   const validations = {
     taskId: [],
     notes: [],
-    completionData: [{ type: "Required" }],
+    completionDate: [{ type: "Required" }],
     attachmentPath: [],
   };
   const runValidationTasks = async (
@@ -73,7 +73,7 @@ export default function TaskLogsCreateForm(props) {
         let modelFields = {
           taskId,
           notes,
-          completionData,
+          completionDate,
           attachmentPath,
         };
         const validationResponses = await Promise.all(
@@ -139,7 +139,7 @@ export default function TaskLogsCreateForm(props) {
             const modelFields = {
               taskId: value,
               notes,
-              completionData,
+              completionDate,
               attachmentPath,
             };
             const result = onChange(modelFields);
@@ -166,7 +166,7 @@ export default function TaskLogsCreateForm(props) {
             const modelFields = {
               taskId,
               notes: value,
-              completionData,
+              completionDate,
               attachmentPath,
             };
             const result = onChange(modelFields);
@@ -183,32 +183,32 @@ export default function TaskLogsCreateForm(props) {
         {...getOverrideProps(overrides, "notes")}
       ></TextField>
       <TextField
-        label="Completion data"
+        label="Completion date"
         isRequired={true}
         isReadOnly={false}
         type="date"
-        value={completionData}
+        value={completionDate}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               taskId,
               notes,
-              completionData: value,
+              completionDate: value,
               attachmentPath,
             };
             const result = onChange(modelFields);
-            value = result?.completionData ?? value;
+            value = result?.completionDate ?? value;
           }
-          if (errors.completionData?.hasError) {
-            runValidationTasks("completionData", value);
+          if (errors.completionDate?.hasError) {
+            runValidationTasks("completionDate", value);
           }
-          setCompletionData(value);
+          setCompletionDate(value);
         }}
-        onBlur={() => runValidationTasks("completionData", completionData)}
-        errorMessage={errors.completionData?.errorMessage}
-        hasError={errors.completionData?.hasError}
-        {...getOverrideProps(overrides, "completionData")}
+        onBlur={() => runValidationTasks("completionDate", completionDate)}
+        errorMessage={errors.completionDate?.errorMessage}
+        hasError={errors.completionDate?.hasError}
+        {...getOverrideProps(overrides, "completionDate")}
       ></TextField>
       <TextField
         label="Attachment path"
@@ -221,7 +221,7 @@ export default function TaskLogsCreateForm(props) {
             const modelFields = {
               taskId,
               notes,
-              completionData,
+              completionDate,
               attachmentPath: value,
             };
             const result = onChange(modelFields);

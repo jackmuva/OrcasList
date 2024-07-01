@@ -6,7 +6,7 @@ export const getTaskLogs = /* GraphQL */ `
   query GetTaskLogs($id: ID!) {
     getTaskLogs(id: $id) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes
@@ -64,7 +64,7 @@ export const listTaskLogs = /* GraphQL */ `
     ) {
       items {
         attachmentPath
-        completionData
+        completionDate
         createdAt
         id
         notes

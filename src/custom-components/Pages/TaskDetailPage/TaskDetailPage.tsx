@@ -2,6 +2,7 @@ import {useParams} from "react-router-dom";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
 import {useEffect, useState} from "react";
+import TaskLogCard from "../../reusable-components/TaskLogCard/TaskLogCard";
 
 const client = generateClient<Schema>();
 function TaskDetailPage(){
@@ -22,12 +23,25 @@ function TaskDetailPage(){
                 setTaskLogs([...data.items])},
         });
     }, []);
-    // console.log(taskLogs);
+
     return(
         <div>
-            {taskLogs.map((taskLog) => (
+            <button><a href = "/"> Back </a></button>
+            {taskLogs.sort((a, b) => {
+                if (a.completionDate > b.completionDate) {
+                    return -1;
+                }
+                if (b.completionDate > a.completionDate) {
+                    return 1;
+                }
+                return 0;}
+            ).map((taskLog) => (
                 <div>
-                    {taskLog.notes}
+                    <TaskLogCard taskId={taskLog.id}
+                                notes = {taskLog.notes ?? ""}
+                                completionDate={taskLog.completionDate}
+                                attachmentPath={taskLog.attachmentPath ?? ""}
+                    ></TaskLogCard>
                 </div>
             ))}
         </div>

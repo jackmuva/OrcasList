@@ -9,7 +9,7 @@ export const createTaskLogs = /* GraphQL */ `
   ) {
     createTaskLogs(condition: $condition, input: $input) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes
@@ -60,7 +60,7 @@ export const deleteTaskLogs = /* GraphQL */ `
   ) {
     deleteTaskLogs(condition: $condition, input: $input) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes
@@ -111,7 +111,7 @@ export const updateTaskLogs = /* GraphQL */ `
   ) {
     updateTaskLogs(condition: $condition, input: $input) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes

@@ -19,13 +19,13 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type TaskLogsUpdateFormInputValues = {
     taskId?: string;
     notes?: string;
-    completionData?: string;
+    completionDate?: string;
     attachmentPath?: string;
 };
 export declare type TaskLogsUpdateFormValidationValues = {
     taskId?: ValidationFunction<string>;
     notes?: ValidationFunction<string>;
-    completionData?: ValidationFunction<string>;
+    completionDate?: ValidationFunction<string>;
     attachmentPath?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -33,7 +33,7 @@ export declare type TaskLogsUpdateFormOverridesProps = {
     TaskLogsUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     taskId?: PrimitiveOverrideProps<TextFieldProps>;
     notes?: PrimitiveOverrideProps<TextFieldProps>;
-    completionData?: PrimitiveOverrideProps<TextFieldProps>;
+    completionDate?: PrimitiveOverrideProps<TextFieldProps>;
     attachmentPath?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TaskLogsUpdateFormProps = React.PropsWithChildren<{

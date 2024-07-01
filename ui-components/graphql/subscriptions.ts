@@ -9,7 +9,7 @@ export const onCreateTaskLogs = /* GraphQL */ `
   ) {
     onCreateTaskLogs(filter: $filter, owner: $owner) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes
@@ -60,7 +60,7 @@ export const onDeleteTaskLogs = /* GraphQL */ `
   ) {
     onDeleteTaskLogs(filter: $filter, owner: $owner) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes
@@ -111,7 +111,7 @@ export const onUpdateTaskLogs = /* GraphQL */ `
   ) {
     onUpdateTaskLogs(filter: $filter, owner: $owner) {
       attachmentPath
-      completionData
+      completionDate
       createdAt
       id
       notes

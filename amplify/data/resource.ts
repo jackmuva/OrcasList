@@ -18,7 +18,7 @@ const schema = a.schema({
     id: a.id().required(),
     taskId: a.string(),
     notes: a.string(),
-    completionData: a.date().required(),
+    completionDate: a.date().required(),
     attachmentPath: a.string(),
     task: a.belongsTo('Tasks', "id")
   }).authorization(allow => [allow.owner()]),
