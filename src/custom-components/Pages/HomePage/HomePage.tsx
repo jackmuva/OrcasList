@@ -3,17 +3,15 @@ import TaskCard from "../../reusable-components/TaskCard/TaskCard";
 import {useEffect, useState} from "react";
 import {Schema} from "../../../../amplify/data/resource";
 import User from "../../../model/User";
-import { generateClient } from "aws-amplify/data";
+import TaskService from "../../../services/TaskService";
 
-const client = generateClient<Schema>();
 function HomePage(user: User){
     const [tasks, setTasks] = useState<Array<Schema["Tasks"]["type"]>>([]);
     const [openTaskForm, setOpenTaskForm] = useState(false);
 
     useEffect(() => {
-        client.models.Tasks.observeQuery().subscribe({
-            next: (data) => {
-                setTasks([...data.items])},
+        TaskService.getAll().then((data) => {
+            setTasks(data);
         });
     }, []);
 
