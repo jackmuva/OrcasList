@@ -1,12 +1,15 @@
 import {useParams} from "react-router-dom";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
-import {useEffect, useState} from "react";
 import TaskLogCard from "../../reusable-components/TaskLogCard/TaskLogCard";
+import {useAppDispatch, useAppSelector} from "../../../redux/hook";
+import {selectTaskLog, setTaskLogs} from "../../../redux/features/taskLogSlice";
+import {useEffect} from "react";
 
 const client = generateClient<Schema>();
 function TaskDetailPage(){
-    const [taskLogs, setTaskLogs] = useState<Array<Schema["TaskLogs"]["type"]>>([]);
+    const taskLogState = useAppSelector(selectTaskLog);
+    const dispatch = useAppDispatch();
     const { taskId } = useParams();
 
     useEffect(() => {
@@ -20,14 +23,16 @@ function TaskDetailPage(){
             }
         ).subscribe({
             next: (data) => {
-                setTaskLogs([...data.items])},
+                dispatch(setTaskLogs(data.items));
+            }
         });
     }, []);
+
 
     return(
         <div>
             <button><a href = "/"> Back </a></button>
-            {taskLogs.sort((a, b) => {
+            {[...taskLogState.taskLogs].sort((a, b) => {
                 if (a.completionDate > b.completionDate) {
                     return -1;
                 }
