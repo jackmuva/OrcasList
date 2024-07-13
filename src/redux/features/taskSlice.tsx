@@ -15,12 +15,11 @@ export const taskSlice = createSlice({
     initialState,
     reducers: {
         setTask(state, action: PayloadAction<Array<Schema["Tasks"]["type"]>>){
-            state.tasks = state.tasks.concat(action.payload);
+            state.tasks = action.payload;
         }
     }
-})
+});
 
 export const {setTask} = taskSlice.actions;
 export const selectTask = (state: RootState) => state.tasks;
-
-export default taskSlice.reducer
+export default taskSlice.reducer;
