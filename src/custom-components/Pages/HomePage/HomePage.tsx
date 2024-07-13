@@ -1,18 +1,24 @@
 import TasksCreateForm from "../../../../ui-components/TasksCreateForm";
 import TaskCard from "../../reusable-components/TaskCard/TaskCard";
 import {useEffect, useState} from "react";
-import {Schema} from "../../../../amplify/data/resource";
 import User from "../../../model/User";
-import TaskService from "../../../services/TaskService";
+import {useAppDispatch, useAppSelector} from "../../../redux/hook";
+import {selectTask, setTask} from "../../../redux/features/taskSlice";
+import {generateClient} from "aws-amplify/api";
+import {Schema} from "../../../../amplify/data/resource";
 
+const client = generateClient<Schema>();
 function HomePage(user: User){
-    const [tasks, setTasks] = useState<Array<Schema["Tasks"]["type"]>>([]);
+    const taskState = useAppSelector(selectTask);
+    const dispatch = useAppDispatch();
     const [openTaskForm, setOpenTaskForm] = useState(false);
 
     useEffect(() => {
-        TaskService.getAll().then((data) => {
-            setTasks(data);
-        });
+        client.models.Tasks.observeQuery().subscribe({
+            next: (data) => {
+                dispatch(setTask(data.items));
+            }
+        })
     }, []);
 
     function toggleForm() {
@@ -25,7 +31,7 @@ function HomePage(user: User){
             <button onClick={toggleForm}>+ Add new task</button>
             {openTaskForm && <TasksCreateForm></TasksCreateForm>}
             <ul className = "w-96">
-                {tasks.map((elem) => (
+                {taskState.tasks.map((elem) => (
                     <TaskCard
                         id = {elem.id ?? ""}
                         task = {elem.task}
