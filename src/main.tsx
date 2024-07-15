@@ -8,12 +8,13 @@ import '@aws-amplify/ui-react/styles.css';
 import {ThemeProvider} from '@aws-amplify/ui-react';
 import {Provider} from 'react-redux';
 import {store} from "./redux/store";
+import orcaslistTheme from "./orcaslist-theme";
 
 Amplify.configure(outputs);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-      <ThemeProvider>
+      <ThemeProvider theme={orcaslistTheme}>
           <Provider store={store}>
               <App />
           </Provider>

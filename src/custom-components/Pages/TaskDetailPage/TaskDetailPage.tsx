@@ -31,7 +31,7 @@ function TaskDetailPage(){
 
     return(
         <div>
-            <button><a href = "/"> Back </a></button>
+            <button><a href = "/tasks"> Back </a></button>
             {[...taskLogState.taskLogs].sort((a, b) => {
                 if (a.completionDate > b.completionDate) {
                     return -1;
