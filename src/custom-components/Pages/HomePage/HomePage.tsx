@@ -25,12 +25,32 @@ function HomePage(user: User){
         setOpenTaskForm(!openTaskForm);
     }
 
+    function parseEmail(email: string){
+        return email.split("@")[0];
+    }
+
+    function createCategory() {
+
+    }
+
     return(
-        <div>
-            <h1>{user?.username}'s todos</h1>
-            <button onClick={toggleForm}>+ Add new task</button>
+        <div className="flex-col text-center">
+            <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
+                {parseEmail(user?.username)}'s Tasks
+            </h1>
+            <div className="flex">
+                <button className="w-1/2 mx-2 bg-indigo-200 text-blue-800 border-2 border-blue-800
+                                    hover:bg-indigo-100 hover:border-white"
+                        onClick={toggleForm}>
+                    + Add new task
+                </button>
+                <button className="w-1/2 mx-2 bg-indigo-900 text-white border-2 border-white
+                                    hover:bg-indigo-700" onClick={createCategory}>
+                    + Create new category
+                </button>
+            </div>
             {openTaskForm && <TasksCreateForm></TasksCreateForm>}
-            <ul className = "w-96">
+            <ul>
                 {taskState.tasks.map((elem) => (
                     <TaskCard
                         id = {elem.id ?? ""}

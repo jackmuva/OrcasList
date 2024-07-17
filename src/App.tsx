@@ -8,9 +8,9 @@ import AboutPage from "./custom-components/Pages/AboutPage/AboutPage";
 
 function App() {
   return (
-      <div>
+      <div className="w-screen flex justify-center">
         <Header></Header>
-          <div className="px-4 w-screen md:px-52">
+          <div className="w-11/12 md:w-[40rem]">
               <BrowserRouter>
                   <Routes>
                       <Route path = "/tasks"
@@ -19,7 +19,9 @@ function App() {
                                   {({ signOut, user }) => (
                                     <main>
                                         <HomePage username={user?.signInDetails?.loginId ?? ""} />
-                                      <button onClick={signOut}>Sign out</button>
+                                      <button className="bg-red-50 border-2 text-indigo-900 border-indigo-900
+                                                            hover:border-white hover:bg-white"
+                                          onClick={signOut}>Sign out</button>
                                     </main>)}
                                 </Authenticator>
                              }
