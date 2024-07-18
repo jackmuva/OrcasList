@@ -7,12 +7,18 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+  Categories: a.model({
+    category: a.string(),
+    tasks: a.hasMany('Tasks', 'taskId')
+  }).authorization(allow => [allow.owner()]),
   Tasks: a.model({
+    taskId: a.id().required(),
     task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
     howOften: a.integer().required().default(1),
     unitOfTime: a.enum(["days", "months", "years"]),
-    taskLogs: a.hasMany('TaskLogs', 'id')
+    taskLogs: a.hasMany('TaskLogs', 'id'),
+    category: a.belongsTo('Categories', "taskId")
   }).authorization(allow => [allow.owner()]),
   TaskLogs: a.model({
     id: a.id().required(),
