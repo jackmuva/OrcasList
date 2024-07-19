@@ -8,9 +8,9 @@ import AboutPage from "./custom-components/Pages/AboutPage/AboutPage";
 
 function App() {
   return (
-      <div className="w-screen flex justify-center">
-        <Header></Header>
-          <div className="w-11/12 md:w-[40rem]">
+      <div className="flex flex-col h-screen max-w-full place-items-center">
+          <Header></Header>
+          <div className="w-11/12 md:w-[40rem] overflow-x-hidden overflow-y-hidden">
               <BrowserRouter>
                   <Routes>
                       <Route path = "/tasks"

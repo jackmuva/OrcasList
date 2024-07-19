@@ -34,7 +34,7 @@ function HomePage(user: User){
     }
 
     return(
-        <div className="flex-col text-center">
+        <div className="flex-col text-center overflow-x-hidden">
             <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
                 {parseEmail(user?.username)}'s Tasks
             </h1>
