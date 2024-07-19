@@ -12,8 +12,6 @@ function CreateTaskDropdown(){
     const [unitOfTime, setUnitOfTime] = useState(UnitOfTimeEnum.days.valueOf());
 
     const handleSubmit = async() => {
-        console.log(unitOfTime);
-        console.log("this: " + UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]);
         await client.models.Tasks.create({
             taskId: uuidv4(),
             task: task,
