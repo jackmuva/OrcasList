@@ -1,4 +1,5 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import {a, type ClientSchema, defineData} from "@aws-amplify/backend";
+import UnitOfTimeEnum from "../../src/model/UnitOfTimeEnum";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -16,7 +17,7 @@ const schema = a.schema({
     task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
     howOften: a.integer().required().default(1),
-    unitOfTime: a.enum(["days", "months", "years"]),
+    unitOfTime: a.enum([UnitOfTimeEnum.days, UnitOfTimeEnum.months, UnitOfTimeEnum.years]),
     taskLogs: a.hasMany('TaskLogs', 'id'),
     category: a.belongsTo('Categories', "taskId")
   }).authorization(allow => [allow.owner()]),

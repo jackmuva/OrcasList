@@ -1,17 +1,25 @@
 import {useState} from "react";
-import {generateClient} from "aws-amplify/src/api";
+import { v4 as uuidv4 } from 'uuid';
 import {Schema} from "../../../../amplify/data/resource";
+import {generateClient} from "aws-amplify/api";
+import UnitOfTimeEnum from "../../../model/UnitOfTimeEnum";
 
 const client = generateClient<Schema>();
 function CreateTaskDropdown(){
     const [task, setTask] = useState("");
     const [lastCompletedDate, setLastCompletedDate] = useState("");
     const [howOften, setHowOften] = useState("");
-    const [unitOfTime, setUnitOfTime] = useState("");
+    const [unitOfTime, setUnitOfTime] = useState(UnitOfTimeEnum.days.valueOf());
 
-    function handleSubmit(){
-        const { data: newTask } = await client.models.Tasks.create({
-
+    const handleSubmit = async() => {
+        console.log(unitOfTime);
+        console.log("this: " + UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]);
+        await client.models.Tasks.create({
+            taskId: uuidv4(),
+            task: task,
+            lastCompletedDate: lastCompletedDate,
+            howOften: parseInt(howOften),
+            unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]
         })
     }
 
@@ -32,13 +40,13 @@ function CreateTaskDropdown(){
                 </label>
                 <label>
                     <select name="unitOfTime" onChange={(e) => {setUnitOfTime(e.target.value)}}>
-                        <option value="days">days</option>
-                        <option value="months">months</option>
-                        <option value="years">years</option>
+                        <option selected value={UnitOfTimeEnum.days.valueOf()}>days</option>
+                        <option value={UnitOfTimeEnum.months.valueOf()}>months</option>
+                        <option value={UnitOfTimeEnum.years.valueOf()}>years</option>
                     </select>
                  </label>
             </form>
-            <button onClick={handleSubmit}>
+            <button onClick={() => handleSubmit()}>
                 Create Task
             </button>
         </div>

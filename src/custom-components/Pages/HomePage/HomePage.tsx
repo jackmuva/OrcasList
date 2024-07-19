@@ -1,4 +1,3 @@
-import TasksCreateForm from "../../../../ui-components/TasksCreateForm";
 import TaskCard from "../../reusable-components/TaskCard/TaskCard";
 import {useEffect, useState} from "react";
 import User from "../../../model/User";
@@ -6,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../../redux/hook";
 import {selectTask, setTask} from "../../../redux/features/taskSlice";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
+import CreateTaskDropdown from "../../reusable-components/CreateTaskDropdown/CreateTaskDropdown";
 
 const client = generateClient<Schema>();
 function HomePage(user: User){
@@ -49,7 +49,7 @@ function HomePage(user: User){
                     + Create new category
                 </button>
             </div>
-            {openTaskForm && <TasksCreateForm></TasksCreateForm>}
+            {openTaskForm && <CreateTaskDropdown />}
             <ul>
                 {taskState.tasks.map((elem) => (
                     <TaskCard
