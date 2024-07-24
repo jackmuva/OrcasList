@@ -6,12 +6,14 @@ import {selectTask, setTask} from "../../../redux/features/taskSlice";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
 import CreateTaskDropdown from "../../reusable-components/CreateTaskDropdown/CreateTaskDropdown";
+import CreateCatDropdown from "../../reusable-components/CreateCatDropdown/CreateCatDropdown";
 
 const client = generateClient<Schema>();
 function HomePage(user: User){
     const taskState = useAppSelector(selectTask);
     const dispatch = useAppDispatch();
     const [openTaskForm, setOpenTaskForm] = useState(false);
+    const [openCatForm, setOpenCatForm] = useState(false);
 
     useEffect(() => {
         client.models.Tasks.observeQuery().subscribe({
@@ -21,7 +23,10 @@ function HomePage(user: User){
         })
     }, []);
 
-    function toggleForm() {
+    function toggleTaskForm() {
+        if(openCatForm){
+            setOpenCatForm(false);
+        }
         setOpenTaskForm(!openTaskForm);
     }
 
@@ -29,8 +34,11 @@ function HomePage(user: User){
         return email.split("@")[0];
     }
 
-    function createCategory() {
-
+    function toggleCatForm() {
+        if(openTaskForm){
+            setOpenTaskForm(false);
+        }
+        setOpenCatForm(!openCatForm)
     }
 
     return(
@@ -41,15 +49,16 @@ function HomePage(user: User){
             <div className="flex">
                 <button className="w-1/2 mx-2 bg-indigo-200 text-blue-800 border-2 border-blue-800
                                     hover:bg-indigo-100 hover:border-white"
-                        onClick={toggleForm}>
+                        onClick={toggleTaskForm}>
                     + Add new task
                 </button>
                 <button className="w-1/2 mx-2 bg-indigo-900 text-white border-2 border-white
-                                    hover:bg-indigo-700" onClick={createCategory}>
+                                    hover:bg-indigo-700" onClick={toggleCatForm}>
                     + Create new category
                 </button>
             </div>
             {openTaskForm && <CreateTaskDropdown />}
+            {openCatForm && <CreateCatDropdown />}
             <ul>
                 {taskState.tasks.map((elem) => (
                     <TaskCard
