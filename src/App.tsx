@@ -8,31 +8,29 @@ import AboutPage from "./custom-components/Pages/AboutPage/AboutPage";
 
 function App() {
   return (
-      <div className="flex flex-col h-screen max-w-full place-items-center">
+      <BrowserRouter>
+          <div className="max-w-full h-screen overflow-x-hidden">
           <Header></Header>
-          <div className="w-11/12 md:w-[40rem] overflow-x-hidden overflow-y-hidden">
-              <BrowserRouter>
-                  <Routes>
-                      <Route path = "/tasks"
-                             element = {
-                                <Authenticator>
-                                  {({ signOut, user }) => (
-                                    <main>
-                                        <HomePage username={user?.signInDetails?.loginId ?? ""} />
-                                      <button className="bg-red-50 border-2 text-indigo-900 border-indigo-900
-                                                            hover:border-white hover:bg-white"
-                                          onClick={signOut}>Sign out</button>
-                                    </main>)}
-                                </Authenticator>
-                             }
-                      ></Route>
-                      <Route path = "/task/:taskId"
-                             element = {<TaskDetailPage />} />
-                      <Route path = "/" element = {<AboutPage />}/>
-                  </Routes>
-              </BrowserRouter>
+          <Routes>
+              <Route path = "/tasks"
+                     element = {
+                        <Authenticator>
+                          {({ signOut, user }) => (
+                            <main>
+                                <HomePage username={user?.signInDetails?.loginId ?? ""} />
+                              <button className="bg-red-50 border-2 text-indigo-900 border-indigo-900 place-self-center
+                                                    hover:border-white hover:bg-white w-11/12 md:w-[40rem]"
+                                  onClick={signOut}>Sign out</button>
+                            </main>)}
+                        </Authenticator>
+                     }
+              ></Route>
+              <Route path = "/task/:taskId"
+                     element = {<TaskDetailPage />} />
+              <Route path = "/" element = {<AboutPage />}/>
+          </Routes>
           </div>
-      </div>
+      </BrowserRouter>
     );
 }
 export default App;

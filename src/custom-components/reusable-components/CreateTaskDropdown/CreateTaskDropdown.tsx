@@ -1,11 +1,18 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import {Schema} from "../../../../amplify/data/resource";
 import {generateClient} from "aws-amplify/api";
 import UnitOfTimeEnum from "../../../model/UnitOfTimeEnum";
 
 const client = generateClient<Schema>();
-function CreateTaskDropdown(){
+
+interface FuncProps {
+    toggleTaskForm: () => void;
+    toggleNewOne: () => void;
+}
+
+const CreateTaskDropdown: React.FC<FuncProps> = (props:FuncProps) => {
+// function CreateTaskDropdown(toggleTaskForm: () => void){
     const [task, setTask] = useState("");
     const [lastCompletedDate, setLastCompletedDate] = useState("");
     const [howOften, setHowOften] = useState("");
@@ -13,16 +20,20 @@ function CreateTaskDropdown(){
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async() => {
-        if(task === "" || lastCompletedDate === "" || howOften === "" || unitOfTime === ""){
+        if (task === "" || lastCompletedDate === "" || howOften === "" || unitOfTime === "") {
             setErrorMessage("Fields cannot be blank")
+        } else{
+            await client.models.Tasks.create({
+                taskId: uuidv4(),
+                task: task,
+                lastCompletedDate: lastCompletedDate,
+                howOften: parseInt(howOften),
+                unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]
+            }).then(() => {
+                props.toggleTaskForm();
+                props.toggleNewOne();
+            })
         }
-        await client.models.Tasks.create({
-            taskId: uuidv4(),
-            task: task,
-            lastCompletedDate: lastCompletedDate,
-            howOften: parseInt(howOften),
-            unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]
-        })
     }
 
     return(

@@ -9,11 +9,13 @@ import CreateTaskDropdown from "../../reusable-components/CreateTaskDropdown/Cre
 import CreateCatDropdown from "../../reusable-components/CreateCatDropdown/CreateCatDropdown";
 
 const client = generateClient<Schema>();
+
 function HomePage(user: User){
     const taskState = useAppSelector(selectTask);
     const dispatch = useAppDispatch();
     const [openTaskForm, setOpenTaskForm] = useState(false);
     const [openCatForm, setOpenCatForm] = useState(false);
+    const [newOne, setNewOne] = useState(false);
 
     useEffect(() => {
         client.models.Tasks.observeQuery().subscribe({
@@ -21,17 +23,21 @@ function HomePage(user: User){
                 dispatch(setTask(data.items));
             }
         })
-    }, []);
+    }, [newOne]);
+
+    function parseEmail(email: string){
+        return email.split("@")[0];
+    }
+
+    function toggleNewOne(){
+        setNewOne(!newOne);
+    }
 
     function toggleTaskForm() {
         if(openCatForm){
             setOpenCatForm(false);
         }
         setOpenTaskForm(!openTaskForm);
-    }
-
-    function parseEmail(email: string){
-        return email.split("@")[0];
     }
 
     function toggleCatForm() {
@@ -42,7 +48,7 @@ function HomePage(user: User){
     }
 
     return(
-        <div className="flex-col text-center overflow-x-hidden">
+        <div className="flex-col place-self-center text-center overflow-x-hidden w-11/12 md:w-[40rem]">
             <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
                 {parseEmail(user?.username)}'s Tasks
             </h1>
@@ -57,7 +63,7 @@ function HomePage(user: User){
                     + Create new category
                 </button>
             </div>
-            {openTaskForm && <CreateTaskDropdown />}
+            {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
             {openCatForm && <CreateCatDropdown />}
             <ul>
                 {taskState.tasks.map((elem) => (
