@@ -7,11 +7,14 @@ import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
 import CreateTaskDropdown from "../../reusable-components/CreateTaskDropdown/CreateTaskDropdown";
 import CreateCatDropdown from "../../reusable-components/CreateCatDropdown/CreateCatDropdown";
+import {selectCategory, setCategories} from "../../../redux/features/categorySlice";
+import CategoryCard from "../../reusable-components/CategoryCard/CategoryCard";
 
 const client = generateClient<Schema>();
 
 function HomePage(user: User){
     const taskState = useAppSelector(selectTask);
+    const categoryState = useAppSelector(selectCategory);
     const dispatch = useAppDispatch();
     const [openTaskForm, setOpenTaskForm] = useState(false);
     const [openCatForm, setOpenCatForm] = useState(false);
@@ -24,6 +27,15 @@ function HomePage(user: User){
             }
         })
     }, [newOne]);
+
+    useEffect(() => {
+        client.models.Categories.observeQuery().subscribe({
+            next: (data) => {
+                dispatch(setCategories(data.items));
+            }
+        })
+    }, [newOne]);
+
 
     function parseEmail(email: string){
         return email.split("@")[0];
@@ -64,18 +76,23 @@ function HomePage(user: User){
                 </button>
             </div>
             {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
-            {openCatForm && <CreateCatDropdown />}
+            {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
             <ul>
-                {taskState.tasks.map((elem) => (
-                    <TaskCard
-                        id = {elem.id ?? ""}
-                        task = {elem.task}
-                        lastCompletedDate = {elem.lastCompletedDate ?? ""}
-                        howOften = {elem.howOften}
-                        unitOfTime = {elem.unitOfTime ?? ""}
-                        key={elem.id} />
+                {categoryState.categories.map((elem) => (
+                    <CategoryCard id={elem.id} category={elem.category ?? ""} />
                 ))}
             </ul>
+            <ul>
+            {taskState.tasks.map((elem) => (
+                <TaskCard
+                    id = {elem.id ?? ""}
+                    task = {elem.task}
+                    lastCompletedDate = {elem.lastCompletedDate ?? ""}
+                    howOften = {elem.howOften}
+                    unitOfTime = {elem.unitOfTime ?? ""}
+                    key={elem.id} />
+            ))}
+        </ul>
         </div>
     );
 }

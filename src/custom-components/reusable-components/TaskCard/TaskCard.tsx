@@ -1,6 +1,6 @@
 import Task from "../../../model/Task";
 import {useState} from "react";
-import TaskOptionDropdown from "../TaskOptionDropdown/TaskOptionDropdown";
+import TaskOptionDropdown from "./TaskOptionDropdown/TaskOptionDropdown";
 
 function TaskCard( input: Task ) {
     const [openTaskOptions, setOpenTaskOptions] = useState(false);

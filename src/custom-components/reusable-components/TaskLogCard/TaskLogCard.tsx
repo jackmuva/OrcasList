@@ -1,6 +1,6 @@
 import TaskLog from "../../../model/TaskLog";
 import {useState} from "react";
-import AttachmentDropdown from "../AttachmentDropdown/AttachmentDropdown";
+import AttachmentDropdown from "./AttachmentDropdown/AttachmentDropdown";
 
 
 function TaskLogCard(taskLog: TaskLog){

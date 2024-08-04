@@ -9,7 +9,7 @@ import AboutPage from "./custom-components/Pages/AboutPage/AboutPage";
 function App() {
   return (
       <BrowserRouter>
-          <div className="max-w-full h-screen overflow-x-hidden">
+          <div className="max-w-full h-screen overflow-x-hidden flex flex-col">
           <Header></Header>
           <Routes>
               <Route path = "/tasks"

@@ -1,9 +1,14 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {Schema} from "../../../../amplify/data/resource";
 import {generateClient} from "aws-amplify/api";
 
 const client = generateClient<Schema>();
-function CreateCatDropdown(){
+
+interface FuncProps{
+    toggleCatForm: () => void;
+    toggleNewOne: () => void;
+}
+const CreateCatDropdown: React.FC<FuncProps> = (props:FuncProps) => {
     const [category, setCategory] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -13,6 +18,9 @@ function CreateCatDropdown(){
         }
         await client.models.Categories.create({
             category: category
+        }).then(() => {
+            props.toggleNewOne();
+            props.toggleCatForm();
         })
     }
 

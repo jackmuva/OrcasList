@@ -1,4 +1,4 @@
-import TaskLog from "../../../model/TaskLog";
+import TaskLog from "../../../../model/TaskLog";
 
 
 function AttachmentDropdown(taskLog : TaskLog){

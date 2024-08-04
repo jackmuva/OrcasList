@@ -1,4 +1,4 @@
-import Task from "../../../model/Task";
+import Task from "../../../../model/Task";
 import {useState} from "react";
 import TaskCompletionDropdown from "../TaskCompletionDropdown/TaskCompletionDropdown";
 import {useNavigate} from "react-router-dom";

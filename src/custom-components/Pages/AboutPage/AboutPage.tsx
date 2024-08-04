@@ -1,6 +1,6 @@
 function AboutPage(){
     return(
-        <div>
+        <div className="md:w-1/2 m-4 place-self-center">
             <h1 className="text-blue-800 text-4xl font-bold font-mono">Keep track of regular tasks</h1>
             <p className="text-blue-900 text-base p-4 font-mono font-semibold">
                 OrcasList is a way for users to keep track of tasks they do regularly-tasks like regular doctor visits,
