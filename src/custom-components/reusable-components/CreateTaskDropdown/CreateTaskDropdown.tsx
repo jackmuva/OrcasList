@@ -12,7 +12,6 @@ interface FuncProps {
 }
 
 const CreateTaskDropdown: React.FC<FuncProps> = (props:FuncProps) => {
-// function CreateTaskDropdown(toggleTaskForm: () => void){
     const [task, setTask] = useState("");
     const [lastCompletedDate, setLastCompletedDate] = useState("");
     const [howOften, setHowOften] = useState("");
