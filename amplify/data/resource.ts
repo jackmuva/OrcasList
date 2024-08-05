@@ -19,6 +19,7 @@ const schema = a.schema({
     categoryId: a.string(),
     task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
+    nextDate: a.date(),
     howOften: a.integer().required().default(1),
     unitOfTime: a.enum([UnitOfTimeEnum.days, UnitOfTimeEnum.months, UnitOfTimeEnum.years]),
     taskLogs: a.hasMany('TaskLogs', 'id'),

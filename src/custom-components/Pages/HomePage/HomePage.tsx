@@ -88,6 +88,7 @@ function HomePage(user: User){
                     id = {elem.id ?? ""}
                     task = {elem.task}
                     lastCompletedDate = {elem.lastCompletedDate ?? ""}
+                    nextDate = {elem.nextDate ?? ""}
                     howOften = {elem.howOften}
                     unitOfTime = {elem.unitOfTime ?? ""}
                     key={elem.id} />

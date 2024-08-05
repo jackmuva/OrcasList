@@ -9,22 +9,36 @@ function TaskCard( input: Task ) {
         setOpenTaskOptions(!openTaskOptions)
     }
 
+    function prettyDate(dateString: string){
+        const date = new Date(dateString);
+        return (1 + date.getUTCMonth()) + "/" + date.getUTCDay() + "/" + date.getUTCFullYear();
+    }
     return(
-        <div className= "flex-col bg-white px-2">
+        <div className= "flex-col bg-yellow-50 px-2">
             <div className = "flex">
-                <button className = "flex-auto bg-inherit border-0 text-black" onClick = {toggleOpen}>
+                <button className="p-2 flex-1 bg-inherit border-0 font-mono text-base font-bold text-blue-800
+                                    hover:text-blue-500" onClick = {toggleOpen}>
                     { input.task }
                 </button>
-                <div className = "flex-auto">
-                    Every { input.howOften } {input.unitOfTime}
+                <div className = "p-2 flex-1 font-mono text-base font-bold text-blue-800">
+                    Cadence: every { input.howOften } {input.unitOfTime}
+                </div>
+            </div>
+            <div className="flex">
+                <div>
+                    {prettyDate(input.lastCompletedDate)}==============
+                </div>
+                <div>
+                    {prettyDate(input.nextDate)}
                 </div>
             </div>
             {openTaskOptions &&
                 <TaskOptionDropdown id={input.id ?? ""}
                                     task={input.task}
                                     lastCompletedDate={input.lastCompletedDate ?? ""}
+                                    nextDate={input.nextDate ?? ""}
                                     howOften={input.howOften}
-                                    unitOfTime={input.unitOfTime ?? ""} />}
+                                    unitOfTime={input.unitOfTime ?? ""}/>}
 
         </div>
     );

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {Schema} from "../../../../amplify/data/resource";
 import {generateClient} from "aws-amplify/api";
 import UnitOfTimeEnum from "../../../model/UnitOfTimeEnum";
@@ -27,6 +27,8 @@ const CreateTaskDropdown: React.FC<FuncProps> = (props:FuncProps) => {
                 taskId: uuidv4(),
                 task: task,
                 lastCompletedDate: lastCompletedDate,
+                nextDate: calculateNextDate(lastCompletedDate, parseInt(howOften),
+                    UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]),
                 howOften: parseInt(howOften),
                 unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]
             }).then(() => {
@@ -34,6 +36,20 @@ const CreateTaskDropdown: React.FC<FuncProps> = (props:FuncProps) => {
                 props.toggleNewOne();
             })
         }
+    }
+
+    function calculateNextDate(date: string, num: number, unit: UnitOfTimeEnum){
+        let result;
+        if(unit === UnitOfTimeEnum.days){
+            result = new Date(date);
+            result.setDate(result.getDate() + num);
+        } else if(unit === UnitOfTimeEnum.months){
+            result = new Date(new Date(date).setMonth(new Date(date).getMonth() + num));
+        } else{
+            const dateNum = new Date(date).setFullYear(new Date(date).getFullYear() + 1);
+            result = new Date(dateNum);
+        }
+        return result.toISOString().split('T')[0];
     }
 
     return(
