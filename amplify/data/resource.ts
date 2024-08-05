@@ -1,4 +1,7 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import {a, type ClientSchema, defineData} from "@aws-amplify/backend";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import UnitOfTimeEnum from "../../src/model/UnitOfTimeEnum";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -7,12 +10,21 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+  Categories: a.model({
+    id: a.id().required(),
+    category: a.string(),
+    tasks: a.hasMany('Tasks', 'taskId')
+  }).authorization(allow => [allow.owner()]),
   Tasks: a.model({
+    taskId: a.id().required(),
+    categoryId: a.string(),
     task: a.string().required().default('New Task'),
     lastCompletedDate: a.date(),
+    nextDate: a.date(),
     howOften: a.integer().required().default(1),
-    unitOfTime: a.enum(["days", "months", "years"]),
-    taskLogs: a.hasMany('TaskLogs', 'id')
+    unitOfTime: a.enum([UnitOfTimeEnum.days, UnitOfTimeEnum.months, UnitOfTimeEnum.years]),
+    taskLogs: a.hasMany('TaskLogs', 'id'),
+    category: a.belongsTo('Categories', "taskId")
   }).authorization(allow => [allow.owner()]),
   TaskLogs: a.model({
     id: a.id().required(),
