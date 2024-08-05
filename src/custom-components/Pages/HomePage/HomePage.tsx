@@ -77,12 +77,12 @@ function HomePage(user: User){
             </div>
             {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
             {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
-            <ul>
+            <div className="my-2 flex flex-col space-y-1">
                 {categoryState.categories.map((elem) => (
                     <CategoryCard id={elem.id} category={elem.category ?? ""} />
                 ))}
-            </ul>
-            <ul>
+            </div>
+            <div className="my-4 flex flex-col space-y-1">
             {taskState.tasks.map((elem) => (
                 <TaskCard
                     id = {elem.id ?? ""}
@@ -93,7 +93,7 @@ function HomePage(user: User){
                     unitOfTime = {elem.unitOfTime ?? ""}
                     key={elem.id} />
             ))}
-        </ul>
+            </div>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import {a, type ClientSchema, defineData} from "@aws-amplify/backend";
-// @ts-expect-error caused by not resolving to jsx?
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import UnitOfTimeEnum from "../../src/model/UnitOfTimeEnum";
 
 /*== STEP 1 ===============================================================
