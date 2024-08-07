@@ -1,9 +1,15 @@
 import Task from "../../../model/Task";
 import {useState} from "react";
 import TaskOptionDropdown from "./TaskOptionDropdown/TaskOptionDropdown";
+import {useDraggable} from "@dnd-kit/core";
 
 function TaskCard( input: Task ) {
     const [openTaskOptions, setOpenTaskOptions] = useState(false);
+    const {attributes, listeners, setNodeRef, transform} = useDraggable({id: 'draggable',});
+
+    const style = transform ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    } : undefined;
 
     const toggleOpen = () => {
         setOpenTaskOptions(!openTaskOptions)
@@ -32,7 +38,8 @@ function TaskCard( input: Task ) {
     }
 
     return (
-        <div className="flex-col bg-yellow-50 px-2 border-2 border-blue-800 rounded-lg">
+        <div ref={setNodeRef} style={style} {...listeners} {...attributes}
+            className="flex-col bg-yellow-50 px-2 border-2 border-blue-800 rounded-lg">
             <div className="flex items-center">
                 <button className="p-2 flex-1 bg-inherit border-0 font-mono text-2xl font-bold underline text-blue-800
                                     hover:text-blue-500 focus:outline-none" onClick={toggleOpen}>
