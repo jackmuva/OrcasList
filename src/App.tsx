@@ -1,10 +1,10 @@
 import {Authenticator} from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css'
-import HomePage from "./custom-components/Pages/HomePage/HomePage";
+import HomePage from "./ui/pages/HomePage/HomePage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import TaskDetailPage from "./custom-components/Pages/TaskDetailPage/TaskDetailPage";
-import Header from "./custom-components/reusable-components/Header/Header";
-import AboutPage from "./custom-components/Pages/AboutPage/AboutPage";
+import TaskDetailPage from "./ui/pages/TaskDetailPage/TaskDetailPage";
+import Header from "./ui/components/Header/Header";
+import AboutPage from "./ui/pages/AboutPage/AboutPage";
 
 function App() {
   return (

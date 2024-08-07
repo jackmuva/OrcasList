@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
-import TaskLogCard from "../../reusable-components/TaskLogCard/TaskLogCard";
+import TaskLogCard from "../../components/TaskLogCard/TaskLogCard";
 import {useAppDispatch, useAppSelector} from "../../../redux/hook";
 import {selectTaskLog, setTaskLogs} from "../../../redux/features/taskLogSlice";
 import {useEffect} from "react";

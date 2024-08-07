@@ -5,7 +5,8 @@ import {Schema} from "../../../../../amplify/data/resource";
 
 interface FuncProps{
     input: Task,
-    toggle: () => void;
+    toggleDropdown: () => void;
+    toggleNewOne: () => void;
 }
 
 const client = generateClient<Schema>();
@@ -24,7 +25,8 @@ const TaskCompletionDropdown: React.FC<FuncProps> = (props:FuncProps) => {
                 notes: notes,
                 completionDate: completionDate
             }).then(() => {
-                props.toggle();
+                props.toggleDropdown();
+                props.toggleNewOne();
             })
         }
     }

@@ -1,14 +1,14 @@
-import TaskCard from "../../reusable-components/TaskCard/TaskCard";
+import TaskCard from "../../components/TaskCard/TaskCard";
 import {useEffect, useState} from "react";
 import User from "../../../model/User";
 import {useAppDispatch, useAppSelector} from "../../../redux/hook";
 import {selectTask, setTask} from "../../../redux/features/taskSlice";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
-import CreateTaskDropdown from "../../reusable-components/CreateTaskDropdown/CreateTaskDropdown";
-import CreateCatDropdown from "../../reusable-components/CreateCatDropdown/CreateCatDropdown";
+import CreateTaskDropdown from "../../components/CreateTaskDropdown/CreateTaskDropdown";
+import CreateCatDropdown from "../../components/CreateCatDropdown/CreateCatDropdown";
 import {selectCategory, setCategories} from "../../../redux/features/categorySlice";
-import CategoryCard from "../../reusable-components/CategoryCard/CategoryCard";
+import CategoryCard from "../../components/CategoryCard/CategoryCard";
 
 const client = generateClient<Schema>();
 
