@@ -52,7 +52,7 @@ const TaskCompletionDropdown: React.FC<FuncProps> = (props:FuncProps) => {
             </div>
             <button className="m-2 w-fit py-1 text-blue-800 bg-blue-100 font-bold border-2 border-blue-800
                                 hover:border-white" onClick={() => handleSubmit()}>
-                Log Task Completion
+                Save Completion
             </button>
         </div>
     );

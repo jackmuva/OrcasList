@@ -2,7 +2,6 @@ import {Authenticator} from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css'
 import HomePage from "./ui/pages/HomePage/HomePage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import TaskDetailPage from "./ui/pages/TaskDetailPage/TaskDetailPage";
 import Header from "./ui/components/Header/Header";
 import AboutPage from "./ui/pages/AboutPage/AboutPage";
 
@@ -25,8 +24,6 @@ function App() {
                         </Authenticator>
                      }
               ></Route>
-              <Route path = "/task/:taskId"
-                     element = {<TaskDetailPage />} />
               <Route path = "/" element = {<AboutPage />}/>
           </Routes>
           </div>
