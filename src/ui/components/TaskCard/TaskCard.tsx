@@ -84,7 +84,8 @@ function TaskCard( input: Task ) {
                                     lastCompletedDate={input.lastCompletedDate ?? ""}
                                     nextDate={input.nextDate ?? ""}
                                     howOften={input.howOften}
-                                    unitOfTime={input.unitOfTime ?? ""}/>}
+                                    unitOfTime={input.unitOfTime ?? ""}
+                                    categoryId={input.categoryId}/>}
 
         </div>
     );

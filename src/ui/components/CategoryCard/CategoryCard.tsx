@@ -2,7 +2,6 @@ import {useState} from "react";
 import CategoryCardDropdown from "./CategoryCardDropdown/CategoryCardDropdown";
 import Category from "../../../model/Category";
 
-
 export default function CategoryCard( input: Category){
     const [openCategory, setOpenCategory] = useState(false);
 

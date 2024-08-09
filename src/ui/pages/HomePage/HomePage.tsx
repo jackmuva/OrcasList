@@ -9,6 +9,7 @@ import CreateTaskDropdown from "../../components/CreateTaskDropdown/CreateTaskDr
 import CreateCatDropdown from "../../components/CreateCatDropdown/CreateCatDropdown";
 import {selectCategory, setCategories} from "../../../redux/features/categorySlice";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
+import {closestCorners, DndContext} from "@dnd-kit/core";
 
 const client = generateClient<Schema>();
 
@@ -77,23 +78,28 @@ function HomePage(user: User){
             </div>
             {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
             {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
-            <div className="my-2 flex flex-col space-y-1">
+            {/*<div className="my-2 flex flex-col space-y-1">*/}
+            {/*    {categoryState.categories.map((elem) => (*/}
+            {/*        <CategoryCard id={elem.id} category={elem.category ?? ""} />*/}
+            {/*    ))}*/}
+            {/*</div>*/}
+            {/*<div className="my-4 flex flex-col space-y-1">*/}
+            {/*{taskState.tasks.map((elem) => (*/}
+            {/*    <TaskCard*/}
+            {/*        id = {elem.id ?? ""}*/}
+            {/*        task = {elem.task}*/}
+            {/*        lastCompletedDate = {elem.lastCompletedDate ?? ""}*/}
+            {/*        nextDate = {elem.nextDate ?? ""}*/}
+            {/*        howOften = {elem.howOften}*/}
+            {/*        unitOfTime = {elem.unitOfTime ?? ""}*/}
+            {/*        key={elem.id} />*/}
+            {/*))}*/}
+            {/*</div>*/}
+            <DndContext collisionDetection={closestCorners}>
                 {categoryState.categories.map((elem) => (
-                    <CategoryCard id={elem.id} category={elem.category ?? ""} />
+                    <CategoryCard id={elem.id} category={elem.category ?? ""}/>
                 ))}
-            </div>
-            <div className="my-4 flex flex-col space-y-1">
-            {taskState.tasks.map((elem) => (
-                <TaskCard
-                    id = {elem.id ?? ""}
-                    task = {elem.task}
-                    lastCompletedDate = {elem.lastCompletedDate ?? ""}
-                    nextDate = {elem.nextDate ?? ""}
-                    howOften = {elem.howOften}
-                    unitOfTime = {elem.unitOfTime ?? ""}
-                    key={elem.id} />
-            ))}
-            </div>
+            </DndContext>
         </div>
     );
 }
