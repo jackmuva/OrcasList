@@ -9,7 +9,23 @@ import CreateTaskDropdown from "../../components/CreateTaskDropdown/CreateTaskDr
 import CreateCatDropdown from "../../components/CreateCatDropdown/CreateCatDropdown";
 import {selectCategory, setCategories} from "../../../redux/features/categorySlice";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
-import {DndContext} from "@dnd-kit/core";
+import {
+    closestCorners,
+    DndContext,
+    DragEndEvent,
+    DragMoveEvent,
+    DragStartEvent, KeyboardSensor,
+    PointerSensor,
+    UniqueIdentifier,
+    useSensor, useSensors
+} from "@dnd-kit/core";
+
+import {
+    SortableContext,
+    arrayMove,
+    sortableKeyboardCoordinates,
+} from '@dnd-kit/sortable';
+import Category from "../../../model/Category.tsx";
 
 const client = generateClient<Schema>();
 
@@ -37,6 +53,12 @@ function HomePage(user: User){
         })
     }, [newOne]);
 
+    const [containers, setContainers] = useState<Category[]>([]);
+    const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+    const [currentContainerId, setCurrentCountainerId] = useState<UniqueIdentifier | null>();
+    const [containerName, setContainerName] = useState('');
+    const [itemName, setItemName] = useState('');
+
 
     function parseEmail(email: string){
         return email.split("@")[0];
@@ -60,42 +82,56 @@ function HomePage(user: User){
         setOpenCatForm(!openCatForm)
     }
 
+    const handleDragStart = (event: DragStartEvent) => {
+
+    };
+
+    const handleDragMove = (event: DragMoveEvent) => {
+
+    };
+
+    const handleDragEnd = (event: DragEndEvent) => {
+
+    };
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates}),
+    );
+
     return(
         <div className="flex-col place-self-center text-center overflow-x-hidden w-11/12 md:w-[40rem]">
-            <DndContext>
-                <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
-                    {parseEmail(user?.username)}'s Tasks
-                </h1>
-                <div className="flex">
-                    <button className="w-1/2 mx-2 bg-indigo-200 text-blue-800 border-2 border-blue-800
-                                        hover:bg-indigo-100 hover:border-white"
-                            onClick={toggleTaskForm}>
-                        + Add new task
-                    </button>
-                    <button className="w-1/2 mx-2 bg-indigo-900 text-white border-2 border-white
-                                        hover:bg-indigo-700" onClick={toggleCatForm}>
-                        + Create new category
-                    </button>
-                </div>
-                {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
-                {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
-                <div className="my-2 flex flex-col space-y-1">
-                    {categoryState.categories.map((elem) => (
-                        <CategoryCard id={elem.id} category={elem.category ?? ""} />
+            <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
+                {parseEmail(user?.username)}'s Tasks
+            </h1>
+            <div className="flex">
+                <button className="w-1/2 mx-2 bg-indigo-200 text-blue-800 border-2 border-blue-800
+                                    hover:bg-indigo-100 hover:border-white"
+                        onClick={toggleTaskForm}>
+                    + Add new task
+                </button>
+                <button className="w-1/2 mx-2 bg-indigo-900 text-white border-2 border-white
+                                    hover:bg-indigo-700" onClick={toggleCatForm}>
+                    + Create new category
+                </button>
+            </div>
+            {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
+            {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
+            <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCorners}
+                        onDragStart={handleDragStart}
+                        onDragMove={handleDragMove}
+                        onDragEnd={handleDragEnd}>
+                <SortableContext items={containers.map((container) => container.dndId)}>
+                    {containers.map((container) => (
+                        <CategoryCard key={container.dndId}
+                                      category={container.category}
+                                      categoryId={container.categoryId}
+                                      dndId={container.dndId}>
+                        </CategoryCard>
                     ))}
-                </div>
-                <div className="my-4 flex flex-col space-y-1">
-                    {taskState.tasks.map((elem) => (
-                        <TaskCard
-                            id = {elem.id ?? ""}
-                            task = {elem.task}
-                            lastCompletedDate = {elem.lastCompletedDate ?? ""}
-                            nextDate = {elem.nextDate ?? ""}
-                            howOften = {elem.howOften}
-                            unitOfTime = {elem.unitOfTime ?? ""}
-                            key={elem.id} />
-                    ))}
-                </div>
+                </SortableContext>
             </DndContext>
         </div>
     );
