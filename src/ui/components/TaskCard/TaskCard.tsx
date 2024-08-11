@@ -1,9 +1,12 @@
 import Task from "../../../model/Task";
 import {useState} from "react";
 import TaskOptionDropdown from "./TaskOptionDropdown/TaskOptionDropdown";
+import {CSS} from "@dnd-kit/utilities";
+import {useDraggable} from "@dnd-kit/core";
 
 function TaskCard( input: Task ) {
     const [openTaskOptions, setOpenTaskOptions] = useState(false);
+    const {attributes, listeners, setNodeRef, transform} = useDraggable({id: input.id});
 
     const toggleOpen = () => {
         setOpenTaskOptions(!openTaskOptions)
@@ -31,8 +34,13 @@ function TaskCard( input: Task ) {
         return daysLeft / totalDays;
     }
 
+    const style={
+        transform: CSS.Transform.toString(transform)
+    };
+
     return (
-        <div className="flex-col bg-yellow-50 px-2 border-2 border-blue-800 rounded-lg">
+        <div ref={setNodeRef} {...attributes} {...listeners} style={style}
+            className="flex-col bg-yellow-50 my-2 px-2 border-2 border-blue-800 rounded-lg">
             <div className="flex items-center">
                 <button className="p-2 flex-1 bg-inherit border-0 font-mono text-2xl font-bold underline text-blue-800
                                     hover:text-blue-500 focus:outline-none" onClick={toggleOpen}>

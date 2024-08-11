@@ -9,7 +9,14 @@ import CreateTaskDropdown from "../../components/CreateTaskDropdown/CreateTaskDr
 import CreateCatDropdown from "../../components/CreateCatDropdown/CreateCatDropdown";
 import {selectCategory, setCategories} from "../../../redux/features/categorySlice";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
-import {closestCorners, DndContext} from "@dnd-kit/core";
+import {
+    DndContext,
+    DragEndEvent,
+    PointerSensor,
+    TouchSensor,
+    useSensor,
+    useSensors
+} from "@dnd-kit/core";
 
 const client = generateClient<Schema>();
 
@@ -20,9 +27,18 @@ function HomePage(user: User){
     const [openTaskForm, setOpenTaskForm] = useState(false);
     const [openCatForm, setOpenCatForm] = useState(false);
     const [newOne, setNewOne] = useState(false);
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(TouchSensor)
+    )
 
     useEffect(() => {
-        client.models.Tasks.observeQuery().subscribe({
+        client.models.Tasks.observeQuery({
+            filter: {
+                categoryId: {
+                    eq: "Uncategorized"}
+                }
+        }).subscribe({
             next: (data) => {
                 dispatch(setTask(data.items));
             }
@@ -60,6 +76,19 @@ function HomePage(user: User){
         setOpenCatForm(!openCatForm)
     }
 
+    function handleDragEnd(event: DragEndEvent) {
+        const {active, over} = event;
+        console.log(active);
+        console.log(over);
+        if(active !== null && over !== null){
+            console.log('updating');
+            client.models.Tasks.update({
+                id: active.id.toString(),
+                categoryId: over?.id.toString(),
+            }).then(() => toggleNewOne());
+        }
+    }
+
     return(
         <div className="flex-col place-self-center text-center overflow-x-hidden w-11/12 md:w-[40rem]">
             <h1 className="mb-4 text-blue-800 text-4xl font-bold font-mono">
@@ -78,26 +107,24 @@ function HomePage(user: User){
             </div>
             {openTaskForm && <CreateTaskDropdown toggleTaskForm = {toggleTaskForm} toggleNewOne = {toggleNewOne}/>}
             {openCatForm && <CreateCatDropdown toggleCatForm = {toggleCatForm} toggleNewOne = {toggleNewOne} />}
-            {/*<div className="my-2 flex flex-col space-y-1">*/}
-            {/*    {categoryState.categories.map((elem) => (*/}
-            {/*        <CategoryCard id={elem.id} category={elem.category ?? ""} />*/}
-            {/*    ))}*/}
-            {/*</div>*/}
-            {/*<div className="my-4 flex flex-col space-y-1">*/}
-            {/*{taskState.tasks.map((elem) => (*/}
-            {/*    <TaskCard*/}
-            {/*        id = {elem.id ?? ""}*/}
-            {/*        task = {elem.task}*/}
-            {/*        lastCompletedDate = {elem.lastCompletedDate ?? ""}*/}
-            {/*        nextDate = {elem.nextDate ?? ""}*/}
-            {/*        howOften = {elem.howOften}*/}
-            {/*        unitOfTime = {elem.unitOfTime ?? ""}*/}
-            {/*        key={elem.id} />*/}
-            {/*))}*/}
-            {/*</div>*/}
-            <DndContext collisionDetection={closestCorners}>
+            <DndContext onDragEnd={handleDragEnd}
+                        sensors={sensors}>
+                <div className="my-4 flex flex-col space-y-1">
                 {categoryState.categories.map((elem) => (
-                    <CategoryCard id={elem.id} category={elem.category ?? ""}/>
+                    <CategoryCard  category={{id: elem.id, category: elem.category || ""}} rerenderBoolean={newOne}/>
+                ))}
+                </div>
+                {taskState.tasks.map((elem) => (
+                    <TaskCard
+                        id = {elem.id ?? ""}
+                        task = {elem.task}
+                        lastCompletedDate = {elem.lastCompletedDate ?? ""}
+                        nextDate = {elem.nextDate ?? ""}
+                        howOften = {elem.howOften}
+                        unitOfTime = {elem.unitOfTime ?? ""}
+                        key={elem.id}
+                        categoryId={elem.categoryId ?? ""}
+                    />
                 ))}
             </DndContext>
         </div>

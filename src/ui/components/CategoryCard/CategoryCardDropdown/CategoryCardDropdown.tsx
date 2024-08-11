@@ -3,18 +3,22 @@ import TaskCard from "../../TaskCard/TaskCard";
 import {useEffect, useState} from "react";
 import {generateClient} from "aws-amplify/api";
 import Category from "../../../../model/Category";
-import {SortableContext, verticalListSortingStrategy} from '@dnd-kit/sortable';
 
 const client = generateClient<Schema>();
 
-function CategoryCardDropdown(input: Category){
+interface CategoryCardProps{
+    category: Category,
+    rerenderBoolean: boolean
+}
+
+function CategoryCardDropdown(props: CategoryCardProps){
     const [tasks, setTasks] = useState<Array<Schema["Tasks"]["type"]>>([])
 
     useEffect(() => {
         client.models.Tasks.observeQuery({
             filter:{
                 categoryId: {
-                    eq: input.id,
+                    eq: props.category.id,
                 }
             }
         }).subscribe({
@@ -22,23 +26,20 @@ function CategoryCardDropdown(input: Category){
                 setTasks([...data.items]);
             }
         });
-    }, []);
+    }, [props.rerenderBoolean]);
 
     return(
         <div>
-            <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-                {tasks.map((elem) => (
-                    <TaskCard
-                        categoryId={input.id}
-                        id = {elem.id ?? ""}
-                        task = {elem.task}
-                        lastCompletedDate = {elem.lastCompletedDate ?? ""}
-                        howOften = {elem.howOften}
-                        unitOfTime = {elem.unitOfTime ?? ""}
-                        key={elem.id}
-                        nextDate={elem.nextDate ?? ""}/>
-                ))}
-            </SortableContext>
+            {tasks.map((elem) => (
+                <TaskCard categoryId={props.category.id}
+                    id = {elem.id ?? ""}
+                    task = {elem.task}
+                    lastCompletedDate = {elem.lastCompletedDate ?? ""}
+                    howOften = {elem.howOften}
+                    unitOfTime = {elem.unitOfTime ?? ""}
+                    key={elem.id}
+                    nextDate={elem.nextDate ?? ""}/>
+            ))}
         </div>
     );
 }

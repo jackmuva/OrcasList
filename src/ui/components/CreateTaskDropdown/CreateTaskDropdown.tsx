@@ -29,7 +29,8 @@ const CreateTaskDropdown: React.FC<FuncProps> = (props:FuncProps) => {
                 nextDate: calculateNextDate(lastCompletedDate, parseInt(howOften),
                     UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]),
                 howOften: parseInt(howOften),
-                unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum]
+                unitOfTime: UnitOfTimeEnum[unitOfTime as keyof typeof UnitOfTimeEnum],
+                categoryId: "Uncategorized"
             }).then(() => {
                 props.toggleTaskForm();
                 props.toggleNewOne();
