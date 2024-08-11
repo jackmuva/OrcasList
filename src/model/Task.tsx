@@ -1,5 +1,6 @@
 interface Task {
     id: string,
+    categoryId: string,
     task: string,
     lastCompletedDate: string,
     nextDate: string,

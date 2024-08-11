@@ -6,14 +6,19 @@ import Category from "../../../../model/Category";
 
 const client = generateClient<Schema>();
 
-function CategoryCardDropdown(input: Category){
+interface CategoryCardProps{
+    category: Category,
+    rerenderBoolean: boolean
+}
+
+function CategoryCardDropdown(props: CategoryCardProps){
     const [tasks, setTasks] = useState<Array<Schema["Tasks"]["type"]>>([])
 
     useEffect(() => {
         client.models.Tasks.observeQuery({
             filter:{
                 categoryId: {
-                    eq: input.id,
+                    eq: props.category.id,
                 }
             }
         }).subscribe({
@@ -21,18 +26,19 @@ function CategoryCardDropdown(input: Category){
                 setTasks([...data.items]);
             }
         });
-    }, []);
+    }, [props.rerenderBoolean]);
 
     return(
         <div>
             {tasks.map((elem) => (
-                <TaskCard
+                <TaskCard categoryId={props.category.id}
                     id = {elem.id ?? ""}
                     task = {elem.task}
                     lastCompletedDate = {elem.lastCompletedDate ?? ""}
                     howOften = {elem.howOften}
                     unitOfTime = {elem.unitOfTime ?? ""}
-                    key={elem.id} />
+                    key={elem.id}
+                    nextDate={elem.nextDate ?? ""}/>
             ))}
         </div>
     );
