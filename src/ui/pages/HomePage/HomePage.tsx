@@ -1,8 +1,6 @@
-import TaskCard from "../../components/TaskCard/TaskCard";
 import {useEffect, useState} from "react";
 import User from "../../../model/User";
 import {useAppDispatch, useAppSelector} from "../../../redux/hook";
-import {selectTask, setTask} from "../../../redux/features/taskSlice";
 import {generateClient} from "aws-amplify/api";
 import {Schema} from "../../../../amplify/data/resource";
 import CreateTaskDropdown from "../../components/CreateTaskDropdown/CreateTaskDropdown";
@@ -16,11 +14,11 @@ import {
     useSensor,
     useSensors
 } from "@dnd-kit/core";
+import UncategorizedTaskContainer from "../../components/UncategorizedTaskContainer/UncategorizedTaskContainer.tsx";
 
 const client = generateClient<Schema>();
 
 function HomePage(user: User){
-    const taskState = useAppSelector(selectTask);
     const categoryState = useAppSelector(selectCategory);
     const dispatch = useAppDispatch();
     const [openTaskForm, setOpenTaskForm] = useState(false);
@@ -32,21 +30,12 @@ function HomePage(user: User){
                 distance: 8,
             }
         }),
-        useSensor(TouchSensor)
-    )
-
-    useEffect(() => {
-        client.models.Tasks.observeQuery({
-            filter: {
-                categoryId: {
-                    eq: "Uncategorized"}
-                }
-        }).subscribe({
-            next: (data) => {
-                dispatch(setTask(data.items));
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                distance: 0.1
             }
         })
-    }, [newOne]);
+    )
 
     useEffect(() => {
         client.models.Categories.observeQuery().subscribe({
@@ -114,18 +103,7 @@ function HomePage(user: User){
                     <CategoryCard  category={{id: elem.id, category: elem.category || ""}} rerenderBoolean={newOne}/>
                 ))}
                 </div>
-                {taskState.tasks.map((elem) => (
-                    <TaskCard
-                        id = {elem.id ?? ""}
-                        task = {elem.task}
-                        lastCompletedDate = {elem.lastCompletedDate ?? ""}
-                        nextDate = {elem.nextDate ?? ""}
-                        howOften = {elem.howOften}
-                        unitOfTime = {elem.unitOfTime ?? ""}
-                        key={elem.id}
-                        categoryId={elem.categoryId ?? ""}
-                    />
-                ))}
+                <UncategorizedTaskContainer rerenderBoolean={newOne}></UncategorizedTaskContainer>
             </DndContext>
         </div>
     );
