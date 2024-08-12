@@ -11,8 +11,7 @@ import {selectCategory, setCategories} from "../../../redux/features/categorySli
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import {
     DndContext,
-    DragEndEvent,
-    PointerSensor,
+    DragEndEvent, PointerSensor,
     TouchSensor,
     useSensor,
     useSensors
@@ -28,7 +27,11 @@ function HomePage(user: User){
     const [openCatForm, setOpenCatForm] = useState(false);
     const [newOne, setNewOne] = useState(false);
     const sensors = useSensors(
-        useSensor(PointerSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            }
+        }),
         useSensor(TouchSensor)
     )
 
@@ -78,10 +81,7 @@ function HomePage(user: User){
 
     function handleDragEnd(event: DragEndEvent) {
         const {active, over} = event;
-        console.log(active);
-        console.log(over);
         if(active !== null && over !== null){
-            console.log('updating');
             client.models.Tasks.update({
                 id: active.id.toString(),
                 categoryId: over?.id.toString(),
